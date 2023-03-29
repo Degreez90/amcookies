@@ -1,9 +1,13 @@
 import Hero from './components/Hero';
+import Section from './components/Section';
 
 function App() {
   return (
-    <div className=' text-white'>
+    <div className=' bg-white text-white'>
       <Hero />
+      <div className='container mx-auto'>
+        <Section />
+      </div>
     </div>
   );
 }
