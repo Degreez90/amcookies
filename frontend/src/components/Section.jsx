@@ -1,10 +1,10 @@
 import React from 'react';
 import Card from './Card';
-import products from '../products';
 
-const Section = () => {
+const Section = ({ products }) => {
+  console.log(products);
   return (
-    <div className='py-3 text-black'>
+    <div className='py-3 text-black mb-10'>
       <h1 className='text-center font-semibold text-4xl'>Freshly Baked </h1>
       <p className='text-center py-3'>Straight to your Stomach</p>
       <div>
