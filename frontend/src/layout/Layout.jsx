@@ -5,7 +5,7 @@ import Hero from '../components/Hero';
 
 const Layout = () => {
   return (
-    <div className='bg-white'>
+    <div className='bg-white relative min-h-screen flex flex-col'>
       <Hero />
       <main className='container mx-auto'>
         <Outlet />

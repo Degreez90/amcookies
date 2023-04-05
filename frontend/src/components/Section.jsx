@@ -1,8 +1,12 @@
-import React from 'react';
-import Card from './Card';
+import React from 'react'
+import Card from './Card'
+import { useState, useContext } from 'react'
+import ProductContext from '../context/products/ProductsContext'
+import { getProducts } from '../context/products/ProductActions'
 
-const Section = ({ products }) => {
-  console.log(products);
+const Section = () => {
+  const { products } = useContext(ProductContext)
+
   return (
     <div className='py-3 text-black mb-10'>
       <h1 className='text-center font-semibold text-4xl'>Freshly Baked </h1>
@@ -15,7 +19,7 @@ const Section = ({ products }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Section;
+export default Section

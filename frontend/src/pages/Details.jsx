@@ -8,8 +8,11 @@ const Details = () => {
 
   const product = products.find((p) => p._id == id);
 
-  return;
-  <Product product={product} />;
+  return (
+    <>
+      <Product product={product} />;
+    </>
+  );
 };
 
 export default Details;

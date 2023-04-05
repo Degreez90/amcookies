@@ -1,11 +1,12 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Hero = () => {
   return (
     <div>
       <div
         className='mx-auto w-full h-[500px]'
-        style={{ backgroundImage: `url(./images/banner.jpg)`, backgroundPosition: 'center', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}
+        style={{ backgroundImage: `url(/images/banner.jpg)`, backgroundPosition: 'center', backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat' }}
       >
         <div className='w-full h-full sticky bg-slate-800/[.30]'>
           <div className='bg-slate-700 shadow-lg shadow-gray-900'>
@@ -13,7 +14,9 @@ const Hero = () => {
               <div className='w-full'>AM</div>
               <div>
                 <ul className='flex space-x-3'>
-                  <li>Home</li>
+                  <li>
+                    <NavLink to={'/'}>Home</NavLink>
+                  </li>
                   <li>Cookies</li>
                   <li>About</li>
                   <li>Contact</li>
