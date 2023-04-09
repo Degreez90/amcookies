@@ -11,7 +11,11 @@ const Details = () => {
   const productDetails = useSelector((state) => state.products)
   const { product } = productDetails
 
-  useEffect(() => {})
+  useEffect(() => {
+    if (!isError) {
+      toast
+    }
+  })
 
   console.log(product)
 
