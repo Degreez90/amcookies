@@ -6,7 +6,6 @@ import Section from './components/Section'
 import Home from './pages/Home'
 import products from './products'
 import Layout from './layout/layout'
-import { ProductProvider } from './context/products/ProductsContext'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,23 +17,7 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  return (
-    // <div className='bg-white text-white relative min-h-screen flex flex-col'>
-    //   <Router>
-    //     <Hero />
-    //     <div className='container mx-auto'>
-    //       <Routes>
-    //         <Route index element={<Home products={products} />} />
-    //         <Route path='/details/:id' element={<Details products={products} />} />
-    //       </Routes>
-    //     </div>
-    //     <Footer />
-    //   </Router>
-    // </div>
-    <ProductProvider>
-      <RouterProvider router={router} />
-    </ProductProvider>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App

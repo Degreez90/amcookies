@@ -2,13 +2,6 @@ import React, { useEffect } from 'react'
 import { getProducts } from '../context/products/ProductActions'
 
 const Product = ({ product }) => {
-  const { products, dispatch } = useContext(ProductContext)
-
-  useEffect(() => {
-    const products = getProducts()
-    dispatch({ type: 'GET_USERS', payload: users })
-  })
-
   return (
     <div className='card lg:card-side bg-base-100 shadow-xl mt-10'>
       <figure>
