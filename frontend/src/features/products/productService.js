@@ -1,15 +1,14 @@
 import axios from 'axios'
 
-const API_URL = '/api/products'
+const API_URL = '/api/products/'
 
 const getProducts = async () => {
   const response = await axios.get(API_URL)
   return response.data
 }
 
-const getProduct = async () => {
-  const response = await axios.get(API_URL)
-  console.log(response)
+const getProduct = async (productId) => {
+  const response = await axios.get(API_URL + productId)
   return response.data
 }
 

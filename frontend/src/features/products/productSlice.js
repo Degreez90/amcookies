@@ -3,6 +3,7 @@ import productService from './productService'
 
 const initialState = {
   products: [],
+  product: {},
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -62,6 +63,19 @@ export const productSlice = createSlice({
         state.products = action.payload
       })
       .addCase(getProducts.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(getProduct.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getProduct.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.product = action.payload
+      })
+      .addCase(getProduct.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

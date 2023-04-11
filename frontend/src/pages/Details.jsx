@@ -1,7 +1,8 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import Product from '../components/Product'
-import { Routes, Route, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { getProduct } from '../features/products/productSlice'
 
 const Details = () => {
   const { id } = useParams()
@@ -9,13 +10,15 @@ const Details = () => {
   const dispatch = useDispatch()
 
   const productDetails = useSelector((state) => state.products)
-  const { product } = productDetails
+  const { product, isError, isLoading, message } = productDetails
 
   useEffect(() => {
-    if (!isError) {
-      toast
+    if (isError) {
+      toast.error(message)
     }
-  })
+
+    dispatch(getProduct(id))
+  }, [isError, message, id])
 
   console.log(product)
 
