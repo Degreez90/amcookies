@@ -1,7 +1,7 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Footer from '../components/Footer';
-import Hero from '../components/Hero';
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Footer from '../components/Footer'
+import Hero from '../components/hero'
 
 const Layout = () => {
   return (
@@ -12,7 +12,7 @@ const Layout = () => {
       </main>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

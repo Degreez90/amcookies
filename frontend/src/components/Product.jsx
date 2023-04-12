@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const Product = ({ product }) => {
   const [qty, setQty] = useState(1)
+
+  const { id } = useParams()
+  const navigate = useNavigate
 
   return (
     <div className='card lg:card-side bg-base-100 shadow-xl mt-10'>
