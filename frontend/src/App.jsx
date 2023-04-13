@@ -9,13 +9,15 @@ import {
 import Details from './pages/Details'
 import Home from './pages/Home'
 import products from './products'
+import Cart from './pages/cart'
 import Layout from './layout/layout'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home products={products} />} />
-      <Route path='details/:id' element={<Details products={products} />} />
+      <Route path='details/:id' element={<Details />} />
+      <Route path='cart/:id?' element={<Cart />} />
     </Route>
   )
 )

@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { cartAddItem } from '../features/cart/cartSlice'
+import { useDispatch } from 'react-redux'
 
 const Product = ({ product }) => {
   const [qty, setQty] = useState(1)
 
   const { id } = useParams()
   const navigate = useNavigate
+
+  const dispatch = useDispatch()
+
+  const addToCartHandler = () => {
+    console.log(product._id + ':' + qty)
+    dispatch(cartAddItem({ item: product._id, qty }))
+  }
+
+  // const addToCartHandler = () => {
+  //   navigate(`/cart/${id}?qty=${qty}`)
+  // }
 
   return (
     <div className='card lg:card-side bg-base-100 shadow-xl mt-10'>
@@ -33,7 +46,11 @@ const Product = ({ product }) => {
           </select>
         </div>
         <div className='card-actions justify-end'>
-          <button className='btn btn-primary' disabled={!product.inStock}>
+          <button
+            className='btn btn-primary'
+            onClick={addToCartHandler}
+            disabled={!product.inStock}
+          >
             Add
           </button>
         </div>

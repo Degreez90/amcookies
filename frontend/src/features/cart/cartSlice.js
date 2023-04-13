@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import cartService from '../products/productService'
+import cartService from '../cart/cartService'
 
 const cart = JSON.parse(localStorage.getItem('cartItems'))
 
@@ -8,12 +8,12 @@ const initialState = {
   shipping: {},
 }
 
-export const cartItems = createAsyncThunk(
+export const cartAddItem = createAsyncThunk(
   'cart/getItem',
-  async ({ item, qty }, thunkAPI) => {
+  async ({ id, qty }, thunkAPI) => {
     try {
-      const cart = thunkAPI.getState().cartItems
-      return await cartService.getItems(item, qty, cart)
+      console.log(id + ':' + qty)
+      return await cartService.addToCart(id, qty)
     } catch (error) {
       const message =
         (error.response &&
@@ -35,21 +35,36 @@ export const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addToCart.pending, (state) => {
+      .addCase(cartAddItem.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(addToCart.fulfilled, (state, action) => {
+      .addCase(cartAddItem.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.cartItems = action.payload
+
+        const item = action.payload
+
+        const existItem = state.cartItems.find(
+          (x) => x.product === item.product
+        )
+        if (existItem) {
+          return {
+            ...state,
+            cartItems: state.cartItems.map((x) =>
+              x.product === existItem.product ? item : x
+            ),
+          }
+        } else {
+          return {
+            ...state,
+            cartItems: [...state.cartItems, item],
+          }
+        }
       })
-      .addCase(addToCart.rejected, (state, action) => {
+      .addCase(cartAddItem.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
-      })
-      .addCase(cartClearItems.fulfilled, (state, action) => {
-        state.cartItems = []
       })
   },
 })
