@@ -6,14 +6,17 @@ const cart = JSON.parse(localStorage.getItem('cartItems'))
 const initialState = {
   cartItems: cart ? cart : [],
   shipping: {},
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
 }
 
 export const cartAddItem = createAsyncThunk(
   'cart/getItem',
-  async ({ id, qty }, thunkAPI) => {
+  async ({ item, qty }, thunkAPI) => {
     try {
-      console.log(id + ':' + qty)
-      return await cartService.addToCart(id, qty)
+      console.log(item + ':' + qty)
+      return await cartService.addToCart(item, qty)
     } catch (error) {
       const message =
         (error.response &&
@@ -43,22 +46,17 @@ export const cartSlice = createSlice({
         state.isSuccess = true
 
         const item = action.payload
+        console.log(item)
 
-        const existItem = state.cartItems.find(
-          (x) => x.product === item.product
-        )
+        const existItem = state.cartItems.find((x) => x.id === item.id)
+
         if (existItem) {
-          return {
-            ...state,
-            cartItems: state.cartItems.map((x) =>
-              x.product === existItem.product ? item : x
-            ),
-          }
+          item.qty = item.qty + 1
+          state.cartItems = state.cartItems.map((x) =>
+            x.id === existItem.id ? item : x
+          )
         } else {
-          return {
-            ...state,
-            cartItems: [...state.cartItems, item],
-          }
+          state.cartItems = [...state.cartItems, item]
         }
       })
       .addCase(cartAddItem.rejected, (state, action) => {

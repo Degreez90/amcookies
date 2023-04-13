@@ -6,16 +6,16 @@ const addToCart = async (item, qty) => {
   console.log(item + ':' + qty)
   const response = await axios.get(API_URL + item)
 
-  console.log(response)
+  const data = {
+    id: response.data._id,
+    name: response.data.name,
+    image: response.data.image,
+    price: response.data.price,
+    inStock: response.data.inStock,
+    qty,
+  }
 
-  // const data = {
-  //   id: response._id,
-  //   name: response.name,
-  //   image: response.image,
-  //   price: response.price,
-  //   inStock: response.inStock,
-  //   qty,
-  // }
+  console.log(data)
 
   return data
 }

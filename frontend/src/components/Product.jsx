@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { cartAddItem } from '../features/cart/cartSlice'
+import { cartAddItem, reset } from '../features/cart/cartSlice'
 import { useDispatch } from 'react-redux'
 
 const Product = ({ product }) => {
@@ -14,6 +14,10 @@ const Product = ({ product }) => {
   const addToCartHandler = () => {
     console.log(product._id + ':' + qty)
     dispatch(cartAddItem({ item: product._id, qty }))
+  }
+
+  const deleteCart = () => {
+    dispatch(reset())
   }
 
   // const addToCartHandler = () => {
@@ -52,6 +56,13 @@ const Product = ({ product }) => {
             disabled={!product.inStock}
           >
             Add
+          </button>
+          <button
+            className='btn btn-primary'
+            onClick={deleteCart}
+            disabled={!product.inStock}
+          >
+            clear
           </button>
         </div>
       </div>
