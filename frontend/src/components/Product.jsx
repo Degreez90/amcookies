@@ -12,7 +12,6 @@ const Product = ({ product }) => {
   const dispatch = useDispatch()
 
   const addToCartHandler = () => {
-    console.log(product._id + ':' + qty)
     dispatch(cartAddItem({ item: product._id, qty }))
   }
 
