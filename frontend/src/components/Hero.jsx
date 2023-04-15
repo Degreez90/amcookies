@@ -7,9 +7,9 @@ const Hero = () => {
 
   const { cartItems } = cart
 
-  const count = cartItems.length
+  const count = cartItems ? cartItems.length : 0
 
-  console.log(count)
+  console.log(cartItems)
 
   return (
     <div>
@@ -72,8 +72,15 @@ const Hero = () => {
                   className='mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow'
                 >
                   <div className='card-body'>
-                    <span className='font-bold text-lg'>8 Items</span>
-                    <span className='text-info'>Subtotal: $999</span>
+                    <span className='font-bold text-lg'>
+                      {count ? count : 0} Items
+                    </span>
+                    <span className='text-info'>
+                      Subtotal:
+                      {cartItems
+                        .reduce((acc, item) => acc + item.qty * item.price, 0)
+                        .toFixed(2)}
+                    </span>
                     <div className='card-actions'>
                       <button className='btn btn-primary btn-block'>
                         View cart

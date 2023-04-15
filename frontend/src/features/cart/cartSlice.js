@@ -1,7 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import cartService from '../cart/cartService'
 
-const cart = JSON.parse(localStorage.getItem('cartItems'))
+const cartItem = JSON.parse(localStorage.getItem('cartItems'))
+
+let cart = []
+
+if (cartItem && cartItem.expires > Date.now()) {
+  cart = cartItem.data
+} else {
+  localStorage.removeItem('cartItems')
+}
 
 const initialState = {
   cartItems: cart ? cart : [],
@@ -49,14 +57,29 @@ export const cartSlice = createSlice({
         console.log(item)
 
         const existItem = state.cartItems.find((x) => x.id === item.id)
+        const existItemQty = existItem ? existItem.qty : 0
 
         if (existItem) {
-          item.qty = item.qty + 1
+          item.qty = Number(existItemQty) + Number(item.qty)
           state.cartItems = state.cartItems.map((x) =>
             x.id === existItem.id ? item : x
           )
+          localStorage.setItem(
+            'cartItems',
+            JSON.stringify({
+              data: state.cartItems,
+              expires: Date.now() + 10800000,
+            })
+          )
         } else {
           state.cartItems = [...state.cartItems, item]
+          localStorage.setItem(
+            'cartItems',
+            JSON.stringify({
+              data: state.cartItems,
+              expires: Date.now() + 10800000,
+            })
+          )
         }
       })
       .addCase(cartAddItem.rejected, (state, action) => {

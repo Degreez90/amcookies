@@ -16,6 +16,7 @@ const Product = ({ product }) => {
   }
 
   const deleteCart = () => {
+    localStorage.removeItem('cartItems')
     dispatch(reset())
   }
 
