@@ -20,7 +20,8 @@ const products = [
   {
     name: 'White Chocolate Chip',
     image: '/images/whitechocolatechip.jpg',
-    description: 'Indulge in the golden crunch of our buttery butterscotch cookie',
+    description:
+      'Indulge in the golden crunch of our buttery butterscotch cookie',
     price: 2.5,
     inStock: true,
     rating: 0,
@@ -29,8 +30,9 @@ const products = [
   {
     name: 'Mix Chocolate Chip',
     image: '/images/chocolatechip_wb.jpg',
-    description: 'Indulge in the golden crunch of our buttery butterscotch cookie',
-    price: 2.5,
+    description:
+      'Indulge in the golden crunch of our buttery butterscotch cookie',
+    price: 3.0,
     inStock: true,
     rating: 0,
     numReviews: 0,
@@ -47,7 +49,8 @@ const products = [
   {
     name: 'ButterScotch',
     image: '/images/butterscotch_cc.jpg',
-    description: 'Indulge in the golden crunch of our buttery butterscotch cookie',
+    description:
+      'Indulge in the golden crunch of our buttery butterscotch cookie',
     price: 2.5,
     inStock: true,
     rating: 0,
@@ -56,7 +59,8 @@ const products = [
   {
     name: 'Snicker Doodle',
     image: '/images/snickerdoodle.jpg',
-    description: 'Indulge in the golden crunch of our buttery butterscotch cookie',
+    description:
+      'Indulge in the golden crunch of our buttery butterscotch cookie',
     price: 2.5,
     inStock: true,
     rating: 0,
@@ -65,7 +69,8 @@ const products = [
   {
     name: 'Double Chocolate Chip',
     image: '/images/doublechoc.jpg',
-    description: 'Enjoy in the golden crunch of our double chocolate chip cookie',
+    description:
+      'Enjoy in the golden crunch of our double chocolate chip cookie',
     price: 2.5,
     inStock: true,
     rating: 0,
