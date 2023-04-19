@@ -82,9 +82,11 @@ const Hero = () => {
                         .toFixed(2)}
                     </span>
                     <div className='card-actions'>
-                      <button className='btn btn-primary btn-block'>
-                        View cart
-                      </button>
+                      <NavLink to={'/cart'}>
+                        <button className='btn btn-primary btn-block'>
+                          View Cart
+                        </button>
+                      </NavLink>
                     </div>
                   </div>
                 </div>
