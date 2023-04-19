@@ -9,48 +9,70 @@ const Cart = () => {
 
   return (
     <div>
-      <div className='grid gap-4 grid-cols-3 py-5 grid-rows-none'>
-        <div className='text-center col-span-2'>
-          <h1 className='text-3xl tracking-widest'>SHOPPING CART</h1>
-          {cartItems.length == 0 ? (
-            <div>Your cart is empy</div>
-          ) : (
-            cartItems.map((items) => (
-              <div className='border-b border-b-1 py-3 px-3'>
-                <div className='grid grid-cols-5'>
-                  <div>
+      <div className='container mx-auto px-4 md:px-0'>
+        <h1 className='text-3xl font-bold text-center my-4 md:text-left'>
+          SHOPPING CART
+        </h1>
+        {cartItems.length === 0 ? (
+          <div>Your cart is empty</div>
+        ) : (
+          <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+            <div className='col-span-2'>
+              {cartItems.map((item) => (
+                <div
+                  key={item.id}
+                  className='flex flex-col md:flex-row border-b py-3'
+                >
+                  <div className='w-full md:w-1/5 mr-4 md:mr-0 mb-2 md:mb-0'>
                     <img
-                      style={{ width: '100px', height: '100px' }}
-                      src={items.image}
-                    ></img>
+                      src={item.image}
+                      alt={item.name}
+                      className='w-full h-auto md:max-h-24 md:object-contain'
+                    />
                   </div>
-                  <div>{items.name}</div>
-                  <div>${items.price}</div>
-                  <div>
-                    <select name='' id='' value={items.qty} onChange={''}>
+                  <div className='flex-grow md:w-2/5'>
+                    <h2 className='text-lg font-medium'>{item.name}</h2>
+                    <p className='text-gray-500'>{item.description}</p>
+                  </div>
+                  <div className='w-full md:w-1/5 flex items-center justify-center'>
+                    <span className='text-lg font-medium'>${item.price}</span>
+                  </div>
+                  <div className='w-full md:w-1/5 flex items-center justify-center'>
+                    <select
+                      value={item.qty}
+                      onChange={(e) => console.log(e.target.value)}
+                      className='rounded-md border-gray-400'
+                    >
                       {Array.from({ length: 12 }, (_, i) => (
                         <option key={i + 1} value={i + 1}>
                           {i + 1}
                         </option>
                       ))}
                     </select>
-                  </div>
-                  <div>
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <button className='ml-2 text-red-500'>
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </button>
                   </div>
                 </div>
+              ))}
+            </div>
+            <div className='flex flex-col justify-between md:col-span-1'>
+              <div className='text-lg font-medium mb-4 md:mb-0'>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}{' '}
+                items):
+                <span className='ml-2'>
+                  $
+                  {cartItems
+                    .reduce((acc, item) => acc + item.qty * item.price, 0)
+                    .toFixed(2)}
+                </span>
               </div>
-            ))
-          )}
-        </div>
-        <div>
-          <div className='text-center border'>
-            <div className='text-2xl tracking-widest'>Sutotal Items</div>
-            <div className='border-t border-t-1 p-5'>
-              <button className='btn btn-primary'>Buy Now</button>
+              <div className='text-center md:text-left'>
+                <button className='btn btn-primary'>Buy Now</button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
