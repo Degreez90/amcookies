@@ -38,6 +38,25 @@ export const cartAddItem = createAsyncThunk(
   }
 )
 
+export const removeFromCart = createAsyncThunk(
+  'cart/deleteItem',
+  async ({ id }, thunkAPI) => {
+    try {
+      console.log(id)
+      return id
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -87,6 +106,23 @@ export const cartSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
+      })
+      .addCase(removeFromCart.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isError = false
+
+        const item = action.payload
+
+        console.log(item)
+
+        state.cartItems = state.cartItems.filter((x) => x.id !== item)
+        localStorage.setItem(
+          'cartItems',
+          JSON.stringify({
+            data: state.cartItems,
+            expires: Date.now() + 10800000,
+          })
+        )
       })
   },
 })

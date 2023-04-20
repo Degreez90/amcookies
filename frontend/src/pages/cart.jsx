@@ -1,11 +1,16 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { removeFromCart } from '../features/cart/cartSlice'
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
-
+  const dispatch = useDispatch()
   const { cartItems } = cart
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart({ id: id }))
+  }
 
   return (
     <div>
@@ -49,7 +54,10 @@ const Cart = () => {
                         </option>
                       ))}
                     </select>
-                    <button className='ml-2 text-red-500'>
+                    <button
+                      className='ml-2 text-red-500'
+                      onClick={() => removeFromCartHandler(item.id)}
+                    >
                       <FontAwesomeIcon icon={faTrashCan} />
                     </button>
                   </div>
