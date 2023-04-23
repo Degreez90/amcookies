@@ -10,6 +10,7 @@ import Details from './pages/Details'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Layout from './layout/layout'
+import Shipping from './pages/Shipping'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='details/:id' element={<Details />} />
       <Route path='cart' element={<Cart />} />
+      <Route path='shipping' element={<Shipping />} />
     </Route>
   )
 )
