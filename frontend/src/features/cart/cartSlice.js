@@ -57,6 +57,25 @@ export const removeFromCart = createAsyncThunk(
   }
 )
 
+export const saveShippingAddress = createAsyncThunk(
+  'cart/saveShipping',
+  async (data, thunkAPI) => {
+    try {
+      console.log(data)
+      return data
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -123,6 +142,27 @@ export const cartSlice = createSlice({
             expires: Date.now() + 10800000,
           })
         )
+      })
+      .addCase(saveShippingAddress.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(saveShippingAddress.fulfilled, (state, action) => {
+        state.isLoading = true
+        state.isError = false
+        state.shipping = action.payload
+
+        localStorage.setItem(
+          'shippingAddress',
+          JSON.stringify({
+            data: state.shipping,
+            expires: Date.now() + 10800000,
+          })
+        )
+      })
+      .addCase(saveShippingAddress.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
   },
 })

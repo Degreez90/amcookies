@@ -1,15 +1,51 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { saveShippingAddress } from '../features/cart/cartSlice'
+import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
+import CheckoutSteps from '../components/CheckoutSteps'
 
 const Shipping = () => {
+  const cart = useSelector((state) => state.cart)
+  const { shipping } = cart
+
+  const [firstName, setFirstName] = useState(shipping.firstName || '')
+  const [lastName, setLastName] = useState(shipping.lastName || '')
+  const [address, setAddress] = useState(shipping.address || '')
+  const [email, setEmail] = useState(shipping.email || '')
+  const [city, setCity] = useState(shipping.city || '')
+  const [zipCode, setZipCode] = useState(shipping.city || '')
+  const [country, setCountry] = useState(shipping.country || '')
+
+  console.log(firstName)
+
+  const dispatch = useDispatch()
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(
+      saveShippingAddress({
+        firstName,
+        lastName,
+        address,
+        email,
+        city,
+        zipCode,
+        country,
+      })
+    )
+  }
+
   return (
     <div>
       <div className='container px-4 md:px-0'>
+        <CheckoutSteps step1 />
         <h1 className='text-3xl font-bold text-center my-4 md:text-left'>
           SHOPPING CART
         </h1>
         <div className='flex flex-col items-center'>
           <form
-            action=''
+            onSubmit={submitHandler}
             className='w-full max-w-md mt-8 p-4 bg-gray-100 rounded-lg'
           >
             <div className='flex flex-col mb-4'>
@@ -19,8 +55,10 @@ const Shipping = () => {
               <input
                 className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
                 placeholder='First Name'
+                value={firstName}
                 type='text'
                 required
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div className='flex flex-col mb-4'>
@@ -30,8 +68,23 @@ const Shipping = () => {
               <input
                 className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
                 placeholder='Last Name'
+                value={lastName}
                 type='text'
                 required
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            <div className='flex flex-col mb-4'>
+              <label htmlFor='lastName' className='mb-2 font-medium'>
+                Email:
+              </label>
+              <input
+                className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Email'
+                value={email}
+                type='text'
+                required
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className='flex flex-col mb-4'>
@@ -41,8 +94,10 @@ const Shipping = () => {
               <input
                 className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
                 placeholder='Address'
+                value={address}
                 type='text'
                 required
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div className='flex flex-col mb-4'>
@@ -52,8 +107,10 @@ const Shipping = () => {
               <input
                 className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
                 placeholder='City'
+                value={city}
                 type='text'
                 required
+                onChange={(e) => setCity(e.target.value)}
               />
             </div>
             <div className='flex flex-col mb-4'>
@@ -63,11 +120,29 @@ const Shipping = () => {
               <input
                 className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
                 placeholder='Zipcode'
+                value={zipCode}
                 type='text'
                 required
+                onChange={(e) => setZipCode(e.target.value)}
               />
             </div>
-            <button className='w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'>
+            <div className='flex flex-col mb-4'>
+              <label htmlFor='country' className='mb-2 font-medium'>
+                Country:
+              </label>
+              <select
+                className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                required
+              >
+                <option value='United States'>United States</option>
+              </select>
+            </div>
+            <button
+              type='submit'
+              className='w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+            >
               Submit
             </button>
           </form>

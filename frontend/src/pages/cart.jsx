@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { removeFromCart } from '../features/cart/cartSlice'
+import { Link } from 'react-router-dom'
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
@@ -76,7 +77,9 @@ const Cart = () => {
                 </span>
               </div>
               <div className='text-center md:text-left'>
-                <button className='btn btn-primary'>Buy Now</button>
+                <Link to={'/shipping'}>
+                  <button className='btn btn-primary'>Buy Now</button>
+                </Link>
               </div>
             </div>
           </div>
