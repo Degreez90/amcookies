@@ -11,7 +11,7 @@ import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Layout from './layout/layout'
 import Shipping from './pages/Shipping'
-import Payment from './pages/payment'
+import Payment from './pages/Payment'
 
 const router = createBrowserRouter(
   createRoutesFromElements(

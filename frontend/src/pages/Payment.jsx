@@ -1,10 +1,13 @@
 import CheckoutSteps from '../components/CheckoutSteps'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Payment = () => {
+  const [paymentMethod, setPaymentMethod] = useState('PayPal')
+
   return (
     <div className='container max-w-sm mx-auto'>
-      <CheckoutSteps step1 step2 step3 />
-      <div className='bg-white rounded-lg shadow-lg p-5'>
+      <CheckoutSteps step1 step2 />
+      <div className='bg-white rounded-lg shadow-lg my-4 p-5'>
         <div className='flex items-center justify-between mb-5'>
           <div className='text-lg font-bold'>Payment Method</div>
         </div>
