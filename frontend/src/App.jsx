@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Layout from './layout/layout'
 import Shipping from './pages/Shipping'
+import Payment from './pages/payment'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path='details/:id' element={<Details />} />
       <Route path='cart' element={<Cart />} />
       <Route path='shipping' element={<Shipping />} />
+      <Route path='payment' element={<Payment />} />
     </Route>
   )
 )
