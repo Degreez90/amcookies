@@ -76,6 +76,25 @@ export const saveShippingAddress = createAsyncThunk(
   }
 )
 
+export const savePaymentMethod = createAsyncThunk(
+  'cart/savePayment',
+  async (data, thunkAPI) => {
+    try {
+      console.log(data)
+      return data
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -163,6 +182,23 @@ export const cartSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload
+      })
+      .addCase(savePaymentMethod.pending, (state, action) => {
+        state.isLoading = true
+      })
+      .addCase(savePaymentMethod.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isError = false
+
+        const data = action.payload
+
+        localStorage.setItem(
+          'paymentMethod',
+          JSON.stringify({
+            data: data,
+            expires: Date.now() + 10800000,
+          })
+        )
       })
   },
 })

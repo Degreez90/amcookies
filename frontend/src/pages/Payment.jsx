@@ -1,8 +1,27 @@
 import CheckoutSteps from '../components/CheckoutSteps'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { savePaymentMethod } from '../features/cart/cartSlice'
 
 const Payment = () => {
+  const cart = useSelector((state) => state.cart)
+  const { shipping } = cart
+
+  const navigate = useNavigate()
+
+  if (!shipping.address) {
+    navigate('/shipping')
+  }
+
   const [paymentMethod, setPaymentMethod] = useState('PayPal')
+
+  const dispatch = useDispatch()
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(savePaymentMethod(paymentMethod))
+    navigate('/order')
+  }
 
   return (
     <div className='container max-w-sm mx-auto'>
@@ -11,7 +30,7 @@ const Payment = () => {
         <div className='flex items-center justify-between mb-5'>
           <div className='text-lg font-bold'>Payment Method</div>
         </div>
-        <form className='space-y-4'>
+        <form onSubmit={submitHandler} className='space-y-4'>
           <fieldset>
             <legend className='block font-medium text-gray-700 mb-2'>
               Select Method
@@ -24,6 +43,7 @@ const Payment = () => {
                   name='paymentMethod'
                   value='PayPal'
                   checked
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                 />
                 <span className='ml-2'>PayPal or Credit Card</span>
               </label>

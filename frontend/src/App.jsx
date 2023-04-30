@@ -12,6 +12,7 @@ import Cart from './pages/Cart'
 import Layout from './layout/layout'
 import Shipping from './pages/Shipping'
 import Payment from './pages/Payment'
+import PlaceOrder from './pages/PlaceOrder'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path='cart' element={<Cart />} />
       <Route path='shipping' element={<Shipping />} />
       <Route path='payment' element={<Payment />} />
+      <Route path='placeorder' element={<PlaceOrder />} />
     </Route>
   )
 )
