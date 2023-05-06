@@ -2,6 +2,7 @@ import CheckoutSteps from '../components/CheckoutSteps'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { savePaymentMethod } from '../features/cart/cartSlice'
+import { useState, useEffect } from 'react'
 
 const Payment = () => {
   const cart = useSelector((state) => state.cart)
@@ -9,9 +10,11 @@ const Payment = () => {
 
   const navigate = useNavigate()
 
-  if (!shipping.address) {
-    navigate('/shipping')
-  }
+  useEffect(() => {
+    if (!shipping.address) {
+      navigate('/shipping')
+    }
+  }, [shipping.address, navigate])
 
   const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
@@ -20,7 +23,7 @@ const Payment = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(savePaymentMethod(paymentMethod))
-    navigate('/order')
+    navigate('/placeorder')
   }
 
   return (

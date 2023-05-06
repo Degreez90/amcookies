@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveShippingAddress } from '../features/cart/cartSlice'
 import { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CheckoutSteps from '../components/CheckoutSteps'
 
 const Shipping = () => {
@@ -20,6 +20,7 @@ const Shipping = () => {
   console.log(firstName)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -34,6 +35,7 @@ const Shipping = () => {
         country,
       })
     )
+    navigate('/placeorder')
   }
 
   return (
@@ -41,7 +43,7 @@ const Shipping = () => {
       <div className='container px-4 md:px-0'>
         <CheckoutSteps step1 />
         <h1 className='text-3xl font-bold text-center my-4 md:text-left'>
-          SHOPPING CART
+          SHIPPING INFO
         </h1>
         <div className='flex flex-col items-center'>
           <form

@@ -9,10 +9,11 @@ import {
 import Details from './pages/Details'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
-import Layout from './layout/layout'
+import Layout from './layout/Layout'
 import Shipping from './pages/Shipping'
 import Payment from './pages/Payment'
 import PlaceOrder from './pages/PlaceOrder'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +29,11 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  return <RouterProvider router={router} />
+  return (
+    <PayPalScriptProvider>
+      <RouterProvider router={router} />
+    </PayPalScriptProvider>
+  )
 }
 
 export default App

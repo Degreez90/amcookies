@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import cartService from '../cart/cartService'
 
+//Use data from local storage
 const cartItem = JSON.parse(localStorage.getItem('cartItems'))
+const shippingAddress = JSON.parse(localStorage.getItem('shippingAddress'))
 
 let cart = []
 
@@ -11,9 +13,17 @@ if (cartItem && cartItem.expires > Date.now()) {
   localStorage.removeItem('cartItems')
 }
 
+let shippingInfo = {}
+if (shippingAddress && shippingAddress.expires > Date.now()) {
+  shippingInfo = shippingAddress.data
+} else {
+  localStorage.removeItem('shippingAddress')
+}
+
+//Setup initial state
 const initialState = {
   cartItems: cart ? cart : [],
-  shipping: {},
+  shipping: shippingInfo ? shippingInfo : {},
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -57,49 +67,54 @@ export const removeFromCart = createAsyncThunk(
   }
 )
 
-export const saveShippingAddress = createAsyncThunk(
-  'cart/saveShipping',
-  async (data, thunkAPI) => {
-    try {
-      console.log(data)
-      return data
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+// export const saveShippingAddress = createAsyncThunk(
+//   'cart/saveShipping',
+//   async (data, thunkAPI) => {
+//     try {
+//       console.log(data)
+//       return data
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString()
 
-      return thunkAPI.rejectWithValue(message)
-    }
-  }
-)
-
-export const savePaymentMethod = createAsyncThunk(
-  'cart/savePayment',
-  async (data, thunkAPI) => {
-    try {
-      console.log(data)
-      return data
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
-
-      return thunkAPI.rejectWithValue(message)
-    }
-  }
-)
+//       return thunkAPI.rejectWithValue(message)
+//     }
+//   }
+// )
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     reset: (state) => initialState,
+    savePaymentMethod: (state, action) => {
+      const data = action.payload
+      state.payment = data
+
+      localStorage.setItem(
+        'paymentMethod',
+        JSON.stringify({
+          data: data,
+          expires: Date.now() + 10800000,
+        })
+      )
+    },
+    saveShippingAddress: (state, action) => {
+      const data = action.payload
+      state.shipping = data
+
+      localStorage.setItem(
+        'shippingAddress',
+        JSON.stringify({
+          data: state.shipping,
+          expires: Date.now() + 10800000,
+        })
+      )
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -162,46 +177,49 @@ export const cartSlice = createSlice({
           })
         )
       })
-      .addCase(saveShippingAddress.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(saveShippingAddress.fulfilled, (state, action) => {
-        state.isLoading = true
-        state.isError = false
-        state.shipping = action.payload
+    // .addCase(saveShippingAddress.pending, (state) => {
+    //   state.isLoading = true
+    // })
+    // .addCase(saveShippingAddress.fulfilled, (state, action) => {
+    //   state.isLoading = true
+    //   state.isError = false
+    //   state.shipping = action.payload
 
-        localStorage.setItem(
-          'shippingAddress',
-          JSON.stringify({
-            data: state.shipping,
-            expires: Date.now() + 10800000,
-          })
-        )
-      })
-      .addCase(saveShippingAddress.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.message = action.payload
-      })
-      .addCase(savePaymentMethod.pending, (state, action) => {
-        state.isLoading = true
-      })
-      .addCase(savePaymentMethod.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isError = false
+    //   localStorage.setItem(
+    //     'shippingAddress',
+    //     JSON.stringify({
+    //       data: state.shipping,
+    //       expires: Date.now() + 10800000,
+    //     })
+    //   )
+    // })
+    // .addCase(saveShippingAddress.rejected, (state, action) => {
+    //   state.isLoading = false
+    //   state.isError = true
+    //   state.message = action.payload
+    // })
+    // .addCase(savePaymentMethod.pending, (state, action) => {
+    //   state.isLoading = true
+    // })
+    // .addCase(savePaymentMethod.fulfilled, (state, action) => {
+    //   state.isLoading = false
+    //   state.isError = false
 
-        const data = action.payload
+    //   const data = action.payload
 
-        localStorage.setItem(
-          'paymentMethod',
-          JSON.stringify({
-            data: data,
-            expires: Date.now() + 10800000,
-          })
-        )
-      })
+    //   state.payment = data
+
+    //   localStorage.setItem(
+    //     'paymentMethod',
+    //     JSON.stringify({
+    //       data: data,
+    //       expires: Date.now() + 10800000,
+    //     })
+    //   )
+    // })
   },
 })
 
-export const { reset } = cartSlice.actions
+export const { reset, savePaymentMethod, saveShippingAddress } =
+  cartSlice.actions
 export default cartSlice.reducer
