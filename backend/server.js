@@ -20,6 +20,10 @@ app.use(express.urlencoded({ extended: false }))
 // Routes
 app.use('/api/products', productRoutes)
 
+app.get('/api/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+)
+
 // Serve Frontend
 if (process.env.NODE_ENV === 'production') {
   // Set build folder as static

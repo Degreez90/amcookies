@@ -35,7 +35,7 @@ const Shipping = () => {
         country,
       })
     )
-    navigate('/placeorder')
+    navigate('/payment')
   }
 
   return (

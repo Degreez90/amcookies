@@ -1,13 +1,18 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Shipping from './Shipping'
-import { PayPalButtons } from '@paypal/react-paypal-js'
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 
 const PlaceOrder = () => {
+  const [sdkReady, setSdkReady] = useState(false)
+  const [{ isPending }] = usePayPalScriptReducer()
+
   const cart = useSelector((state) => state.cart)
   const dispatch = useDispatch()
   const { cartItems } = cart
@@ -38,6 +43,29 @@ const PlaceOrder = () => {
     Number(shippingPrice) +
     Number(taxPrice)
   ).toFixed(2)
+
+  const paypalOrder = (data, actions) => {
+    console.log(data)
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: totalPrice,
+          },
+        },
+      ],
+    })
+  }
+
+  const paypalApprove = async (data, action) => {
+    try {
+      const details = await action.order.capture()
+      const name = details.payer.name.given_name
+      alert(`Transaction completed by ${name}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className='container'>
@@ -97,12 +125,12 @@ const PlaceOrder = () => {
                           </option>
                         ))}
                       </select>
-                      <button
+                      {/* <button
                         className='ml-2 text-red-500'
                         onClick={() => removeFromCartHandler(item.id)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 ))}
@@ -140,7 +168,15 @@ const PlaceOrder = () => {
             </div>
             <div className='flex border-b py-3 px-4'></div>
             <div className='flex border-b py-3 px-4'>
-              <PayPalButtons className='mx-auto' />
+              {isPending ? (
+                <p>loading..</p>
+              ) : (
+                <PayPalButtons
+                  className='mx-auto'
+                  createOrder={(totalPrice, actions) => paypalOrder(totalPrice)}
+                  onApprove={paypalApprove}
+                />
+              )}
             </div>
           </div>
         </div>
