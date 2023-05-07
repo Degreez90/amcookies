@@ -44,6 +44,21 @@ const PlaceOrder = () => {
     Number(taxPrice)
   ).toFixed(2)
 
+  const [clientId, setClientId] = useState(null)
+
+  useEffect(() => {
+    const addPayPalScript = async () => {
+      const { data } = await axios.get('/api/config/paypal')
+      setClientId(data)
+    }
+    addPayPalScript()
+  }, [])
+
+  const initialOptions = {
+    'client-id': clientId,
+    currency: 'USD',
+  }
+
   const paypalOrder = (data, actions) => {
     console.log(data)
     return actions.order.create({
@@ -173,6 +188,7 @@ const PlaceOrder = () => {
               ) : (
                 <PayPalButtons
                   className='mx-auto'
+                  options={initialOptions}
                   createOrder={(totalPrice, actions) => paypalOrder(totalPrice)}
                   onApprove={paypalApprove}
                 />

@@ -31,23 +31,23 @@ const router = createBrowserRouter(
 )
 
 function App() {
-  const [clientId, setClientId] = useState(null)
+  // const [clientId, setClientId] = useState(null)
 
-  useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data } = await axios.get('/api/config/paypal')
-      setClientId(data)
-    }
-    addPayPalScript()
-  }, [])
+  // useEffect(() => {
+  //   const addPayPalScript = async () => {
+  //     const { data } = await axios.get('/api/config/paypal')
+  //     setClientId(data)
+  //   }
+  //   addPayPalScript()
+  // }, [])
 
-  const initialOptions = {
-    'client-id': clientId,
-    currency: 'USD',
-  }
+  // const initialOptions = {
+  //   'client-id': clientId,
+  //   currency: 'USD',
+  // }
 
   return (
-    <PayPalScriptProvider options={initialOptions}>
+    <PayPalScriptProvider>
       <RouterProvider router={router} />
     </PayPalScriptProvider>
   )
