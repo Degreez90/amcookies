@@ -20,8 +20,6 @@ const Details = () => {
     dispatch(getProduct(id))
   }, [isError, message, id])
 
-  console.log(product)
-
   return (
     <>
       <Product product={product} />;

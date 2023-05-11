@@ -25,7 +25,7 @@ const Section = () => {
       <h1 className='text-center font-semibold text-4xl'>Freshly Baked </h1>
       <p className='text-center py-3'>Straight to your Stomach</p>
       <div>
-        <div className='xl:grid xl:gap-2 xl:grid-cols-4 flex flex-wrap justify-center space-x-5'>
+        <div className='flex flex-wrap justify-center'>
           {isLoading ? (
             <div>loading...</div>
           ) : products ? (

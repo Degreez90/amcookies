@@ -1,19 +1,40 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import cartService from '../products/productService'
+import cartService from '../cart/cartService'
 
-const cart = JSON.parse(localStorage.getItem('cartItems'))
+//Use data from local storage
+const cartItem = JSON.parse(localStorage.getItem('cartItems'))
+const shippingAddress = JSON.parse(localStorage.getItem('shippingAddress'))
 
-const initialState = {
-  cartItems: cart ? cart : [],
-  shipping: {},
+let cart = []
+
+if (cartItem && cartItem.expires > Date.now()) {
+  cart = cartItem.data
+} else {
+  localStorage.removeItem('cartItems')
 }
 
-export const cartItems = createAsyncThunk(
+let shippingInfo = {}
+if (shippingAddress && shippingAddress.expires > Date.now()) {
+  shippingInfo = shippingAddress.data
+} else {
+  localStorage.removeItem('shippingAddress')
+}
+
+//Setup initial state
+const initialState = {
+  cartItems: cart ? cart : [],
+  shipping: shippingInfo ? shippingInfo : {},
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
+}
+
+export const cartAddItem = createAsyncThunk(
   'cart/getItem',
   async ({ item, qty }, thunkAPI) => {
     try {
-      const cart = thunkAPI.getState().cartItems
-      return await cartService.getItems(item, qty, cart)
+      console.log(item + ':' + qty)
+      return await cartService.addToCart(item, qty)
     } catch (error) {
       const message =
         (error.response &&
@@ -27,32 +48,178 @@ export const cartItems = createAsyncThunk(
   }
 )
 
+export const removeFromCart = createAsyncThunk(
+  'cart/deleteItem',
+  async ({ id }, thunkAPI) => {
+    try {
+      console.log(id)
+      return id
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// export const saveShippingAddress = createAsyncThunk(
+//   'cart/saveShipping',
+//   async (data, thunkAPI) => {
+//     try {
+//       console.log(data)
+//       return data
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString()
+
+//       return thunkAPI.rejectWithValue(message)
+//     }
+//   }
+// )
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     reset: (state) => initialState,
+    savePaymentMethod: (state, action) => {
+      const data = action.payload
+      state.payment = data
+
+      localStorage.setItem(
+        'paymentMethod',
+        JSON.stringify({
+          data: data,
+          expires: Date.now() + 10800000,
+        })
+      )
+    },
+    saveShippingAddress: (state, action) => {
+      const data = action.payload
+      state.shipping = data
+
+      localStorage.setItem(
+        'shippingAddress',
+        JSON.stringify({
+          data: state.shipping,
+          expires: Date.now() + 10800000,
+        })
+      )
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addToCart.pending, (state) => {
+      //Add Item to Cart
+      .addCase(cartAddItem.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(addToCart.fulfilled, (state, action) => {
+      .addCase(cartAddItem.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.cartItems = action.payload
+
+        const item = action.payload
+        console.log(item)
+
+        const existItem = state.cartItems.find((x) => x.id === item.id)
+        const existItemQty = existItem ? existItem.qty : 0
+
+        if (existItem) {
+          item.qty = Number(existItemQty) + Number(item.qty)
+          state.cartItems = state.cartItems.map((x) =>
+            x.id === existItem.id ? item : x
+          )
+          localStorage.setItem(
+            'cartItems',
+            JSON.stringify({
+              data: state.cartItems,
+              expires: Date.now() + 10800000,
+            })
+          )
+        } else {
+          state.cartItems = [...state.cartItems, item]
+          localStorage.setItem(
+            'cartItems',
+            JSON.stringify({
+              data: state.cartItems,
+              expires: Date.now() + 10800000,
+            })
+          )
+        }
       })
-      .addCase(addToCart.rejected, (state, action) => {
+      .addCase(cartAddItem.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload
       })
-      .addCase(cartClearItems.fulfilled, (state, action) => {
-        state.cartItems = []
+      .addCase(removeFromCart.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isError = false
+
+        const item = action.payload
+
+        console.log(item)
+
+        state.cartItems = state.cartItems.filter((x) => x.id !== item)
+        localStorage.setItem(
+          'cartItems',
+          JSON.stringify({
+            data: state.cartItems,
+            expires: Date.now() + 10800000,
+          })
+        )
       })
+    // .addCase(saveShippingAddress.pending, (state) => {
+    //   state.isLoading = true
+    // })
+    // .addCase(saveShippingAddress.fulfilled, (state, action) => {
+    //   state.isLoading = true
+    //   state.isError = false
+    //   state.shipping = action.payload
+
+    //   localStorage.setItem(
+    //     'shippingAddress',
+    //     JSON.stringify({
+    //       data: state.shipping,
+    //       expires: Date.now() + 10800000,
+    //     })
+    //   )
+    // })
+    // .addCase(saveShippingAddress.rejected, (state, action) => {
+    //   state.isLoading = false
+    //   state.isError = true
+    //   state.message = action.payload
+    // })
+    // .addCase(savePaymentMethod.pending, (state, action) => {
+    //   state.isLoading = true
+    // })
+    // .addCase(savePaymentMethod.fulfilled, (state, action) => {
+    //   state.isLoading = false
+    //   state.isError = false
+
+    //   const data = action.payload
+
+    //   state.payment = data
+
+    //   localStorage.setItem(
+    //     'paymentMethod',
+    //     JSON.stringify({
+    //       data: data,
+    //       expires: Date.now() + 10800000,
+    //     })
+    //   )
+    // })
   },
 })
 
-export const { reset } = cartSlice.actions
+export const { reset, savePaymentMethod, saveShippingAddress } =
+  cartSlice.actions
 export default cartSlice.reducer
