@@ -1,14 +1,14 @@
-import React from 'react';
-import Footer from '../components/Footer';
-import Hero from '../components/Hero';
-import Section from '../components/Section';
+import React from 'react'
+import Footer from '../components/Footer'
+import Hero from '../components/Hero'
+import Section from '../components/Section'
 
-const Home = ({ products }) => {
+const Home = () => {
   return (
     <>
-      <Section products={products} />
+      <Section />
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
