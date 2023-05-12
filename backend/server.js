@@ -30,16 +30,16 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 if (process.env.NODE_ENV === 'production') {
   // Set build folder as static
-  app.use(express.static(path.join(__dirname, '../frontend/build')))
+  app.use(express.static(path.join(__dirname, '../frontend/dist')))
 
   // FIX: below code fixes app crashing on refresh in deployment
   app.get('*', (_, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-    // res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+    // res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
   })
 } else {
   app.get('/', (req, res) => {
-    res.status(200).json({ message: 'Welcome to the Support Desk API' })
+    res.status(200).json({ message: 'Welcome to AM Cookies' })
   })
 }
 
