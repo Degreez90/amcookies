@@ -34,8 +34,8 @@ if (process.env.NODE_ENV === 'production') {
 
   // FIX: below code fixes app crashing on refresh in deployment
   app.get('*', (_, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'))
-    // res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+    // res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'))
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
   })
 } else {
   app.get('/', (req, res) => {
