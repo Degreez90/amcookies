@@ -26,7 +26,7 @@ app.get('/api/config/paypal', (req, res) =>
 
 // Serve Frontend
 const __dirname = path.resolve()
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+// app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 if (process.env.NODE_ENV === 'production') {
   // Set build folder as static
@@ -34,8 +34,8 @@ if (process.env.NODE_ENV === 'production') {
 
   // FIX: below code fixes app crashing on refresh in deployment
   app.get('*', (_, res) => {
-    // res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+    res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
+    // res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
   })
 } else {
   app.get('/', (req, res) => {
