@@ -13,9 +13,10 @@ const Shipping = () => {
   const [lastName, setLastName] = useState(shipping.lastName || '')
   const [address, setAddress] = useState(shipping.address || '')
   const [email, setEmail] = useState(shipping.email || '')
+  const [phoneNumber, setPhoneNumber] = useState(shipping.phoneNumber || '')
   const [city, setCity] = useState(shipping.city || '')
   const [zipCode, setZipCode] = useState(shipping.city || '')
-  const [country, setCountry] = useState(shipping.country || '')
+  const [country, setCountry] = useState(shipping.country || 'United States')
 
   console.log(firstName)
 
@@ -30,6 +31,7 @@ const Shipping = () => {
         lastName,
         address,
         email,
+        phoneNumber,
         city,
         zipCode,
         country,
@@ -77,7 +79,7 @@ const Shipping = () => {
               />
             </div>
             <div className='flex flex-col mb-4'>
-              <label htmlFor='lastName' className='mb-2 font-medium'>
+              <label htmlFor='Email' className='mb-2 font-medium'>
                 Email:
               </label>
               <input
@@ -87,6 +89,19 @@ const Shipping = () => {
                 type='text'
                 required
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className='flex flex-col mb-4'>
+              <label htmlFor='phoneNumber' className='mb-2 font-medium'>
+                Phone Number:
+              </label>
+              <input
+                className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                placeholder='Phone Number'
+                value={phoneNumber}
+                type='text'
+                required
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
             <div className='flex flex-col mb-4'>

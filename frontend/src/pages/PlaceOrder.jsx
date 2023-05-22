@@ -8,20 +8,27 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Shipping from './Shipping'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
+import { createOrder } from '../features/orders/orderSlice'
+import { resetOrder } from '../features/orders/orderSlice'
+import { clearLocalStorage, resetCart } from '../features/cart/cartSlice'
 
 const PlaceOrder = () => {
   const [sdkReady, setSdkReady] = useState(false)
   const [{ isPending }] = usePayPalScriptReducer()
 
   const cart = useSelector((state) => state.cart)
-  const dispatch = useDispatch()
   const { cartItems } = cart
   const { shipping } = cart
+
+  const order = useSelector((state) => state.order)
+  const { orderDetails } = order
+
+  const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!cart.payment) {
+    if (!cart.payment || cartItems.length === 0) {
       navigate('/payment')
     }
   }, [navigate, cart])
@@ -54,13 +61,19 @@ const PlaceOrder = () => {
     addPayPalScript()
   }, [])
 
+  useEffect(() => {
+    if (orderDetails._id) {
+      dispatch(resetCart())
+      dispatch(clearLocalStorage())
+    }
+  }, [dispatch, orderDetails._id])
+
   const initialOptions = {
     'client-id': clientId,
     currency: 'USD',
   }
 
   const paypalOrder = (data, actions) => {
-    console.log(data)
     return actions.order.create({
       purchase_units: [
         {
@@ -75,8 +88,35 @@ const PlaceOrder = () => {
   const paypalApprove = async (data, action) => {
     try {
       const details = await action.order.capture()
-      const name = details.payer.name.given_name
-      alert(`Transaction completed by ${name}`)
+      console.log(details)
+      dispatch(
+        createOrder({
+          nonRegUser: {
+            firstName: shipping.firstName,
+            lastName: shipping.lastName,
+            email: shipping.email,
+            phoneNumber: shipping.phoneNumber,
+          },
+          orderItems: cartItems,
+          shippingAddress: {
+            address: shipping.address,
+            city: shipping.city,
+            postalCode: shipping.zipCode,
+            country: shipping.country,
+          },
+          paymentResults: {
+            id: details.id,
+            status: details.status,
+            update_time: details.update_time,
+            emails_address: details.payer.email_address,
+          },
+          paymentMethod: cart.payment,
+          itemsPrice: price,
+          shippingPrice: shippingPrice,
+          taxPrice: taxPrice,
+          totalPrice: totalPrice,
+        })
+      )
     } catch (error) {
       console.log(error)
     }
@@ -89,6 +129,16 @@ const PlaceOrder = () => {
         <div className='md:w-8/12 p-5'>
           <div className='Flex flex-col p-5'>
             <div className=' mb-2 border-b'>
+              {orderDetails._id ? (
+                <div>
+                  <h2 className='mb-2 font-bold text-2xl tracking-widest'>
+                    THANK YOU FOR YOUR PURCHASE
+                  </h2>
+                  <h2 className='mb-2 font-bold text-2xl tracking-widest'>
+                    Order Confirmation#: {orderDetails._id}
+                  </h2>
+                </div>
+              ) : null}
               <h2 className='mb-2 font-bold text-2xl tracking-widest'>
                 SHIPPING
               </h2>
@@ -189,7 +239,9 @@ const PlaceOrder = () => {
                 <PayPalButtons
                   className='mx-auto'
                   options={initialOptions}
-                  createOrder={(totalPrice, actions) => paypalOrder(totalPrice)}
+                  createOrder={(totalPrice, actions) =>
+                    paypalOrder(totalPrice, actions)
+                  }
                   onApprove={paypalApprove}
                 />
               )}

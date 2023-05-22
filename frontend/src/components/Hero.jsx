@@ -9,8 +9,6 @@ const Hero = () => {
 
   const count = cartItems ? cartItems.length : 0
 
-  console.log(cartItems)
-
   return (
     <div>
       <div

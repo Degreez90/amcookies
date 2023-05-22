@@ -3,7 +3,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import connectDB from './config/db.js'
-
+import orderRoutes from './routes/orderRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 const PORT = process.env.PORT || 6000
 
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // Routes
 app.use('/api/products', productRoutes)
-
+app.use('/api/orders', orderRoutes)
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )

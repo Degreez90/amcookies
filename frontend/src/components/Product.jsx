@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { cartAddItem, reset } from '../features/cart/cartSlice'
+import { cartAddItem, resetCart } from '../features/cart/cartSlice'
 import { useDispatch } from 'react-redux'
 
 const Product = ({ product }) => {
@@ -17,7 +17,7 @@ const Product = ({ product }) => {
 
   const deleteCart = () => {
     localStorage.removeItem('cartItems')
-    dispatch(reset())
+    dispatch(resetCart())
   }
 
   // const addToCartHandler = () => {

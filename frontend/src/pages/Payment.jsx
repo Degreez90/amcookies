@@ -16,6 +16,10 @@ const Payment = () => {
     }
   }, [shipping.address, navigate])
 
+  // useEffect(() => {
+
+  // })
+
   const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
   const dispatch = useDispatch()

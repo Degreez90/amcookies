@@ -90,7 +90,15 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    resetCart: (state) => initialState,
+    clearLocalStorage: (state, action) => {
+      const removeFromLocalStorage = (keys) => {
+        keys.forEach((key) => localStorage.removeItem(key))
+      }
+      const keystoRemove = ['paymentMethod', 'shippingAddress', 'cartItems']
+
+      removeFromLocalStorage(keystoRemove)
+    },
     savePaymentMethod: (state, action) => {
       const data = action.payload
       state.payment = data
@@ -220,6 +228,10 @@ export const cartSlice = createSlice({
   },
 })
 
-export const { reset, savePaymentMethod, saveShippingAddress } =
-  cartSlice.actions
+export const {
+  resetCart,
+  savePaymentMethod,
+  saveShippingAddress,
+  clearLocalStorage,
+} = cartSlice.actions
 export default cartSlice.reducer
