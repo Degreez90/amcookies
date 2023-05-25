@@ -16,6 +16,7 @@ import Shipping from './pages/Shipping'
 import Payment from './pages/Payment'
 import PlaceOrder from './pages/PlaceOrder'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import OrderConfirm from './pages/OrderConfirm'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route path='shipping' element={<Shipping />} />
       <Route path='payment' element={<Payment />} />
       <Route path='placeorder' element={<PlaceOrder />} />
+      <Route path='orderconfirm' element={<OrderConfirm />} />
     </Route>
   )
 )

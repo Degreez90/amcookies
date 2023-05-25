@@ -27,11 +27,20 @@ const PlaceOrder = () => {
 
   const navigate = useNavigate()
 
+  // useEffect(() => {
+  //   if (!cart.payment || cartItems.length === 0) {
+  //     navigate('/payment')
+  //   }
+  // }, [navigate, cart])
+
   useEffect(() => {
+    if (orderDetails._id) {
+      navigate('/orderconfirm')
+    }
     if (!cart.payment || cartItems.length === 0) {
       navigate('/payment')
     }
-  }, [navigate, cart])
+  }, [navigate, orderDetails, cart])
 
   //calc prices
   const addDecimals = (num) => {
