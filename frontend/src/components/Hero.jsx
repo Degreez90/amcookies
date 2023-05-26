@@ -34,11 +34,11 @@ const Hero = () => {
                   <li>Contact</li>
                 </ul>
               </div>
-              <div className='mx-4 avatar placeholder'>
+              {/* <div className='mx-4 avatar placeholder'>
                 <div className='bg-neutral-focus text-neutral-content rounded-full w-12'>
                   <span>PF</span>
                 </div>
-              </div>
+              </div> */}
               <div className='dropdown dropdown-end'>
                 <label tabIndex={0} className='btn btn-ghost btn-circle'>
                   <div className='indicator'>
