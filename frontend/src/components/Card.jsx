@@ -20,7 +20,9 @@ const Card = ({ products }) => {
         </h2>
         <p className='text-white'>{products.description}</p>
         <div className='card-actions justify-end'>
-          <button className='btn btn-primary'>Buy Now</button>
+          <Link to={`/details/${products._id}`}>
+            <button className='btn btn-primary'>Buy Now</button>
+          </Link>
         </div>
       </div>
     </div>

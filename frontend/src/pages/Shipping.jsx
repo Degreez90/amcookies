@@ -18,8 +18,6 @@ const Shipping = () => {
   const [zipCode, setZipCode] = useState(shipping.city || '')
   const [country, setCountry] = useState(shipping.country || 'United States')
 
-  console.log(firstName)
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

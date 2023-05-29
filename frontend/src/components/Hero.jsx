@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
   const cart = useSelector((state) => state.cart)
@@ -23,13 +24,14 @@ const Hero = () => {
         <div className='w-full h-full sticky bg-slate-800/[.30]'>
           <div className='bg-slate-700 shadow-lg shadow-gray-900'>
             <nav className='flex py-3 px-3 mx-auto items-center container'>
-              <div className='w-full'>AM</div>
+              <div className='w-full'>
+                <Link to={'/'}>AM</Link>
+              </div>
               <div>
                 <ul className='flex space-x-3'>
                   <li>
-                    <NavLink to={'/'}>Home</NavLink>
+                    <NavLink to={'/'}>Cookies</NavLink>
                   </li>
-                  <li>Cookies</li>
                   <li>About</li>
                   <li>Contact</li>
                 </ul>

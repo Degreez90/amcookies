@@ -141,7 +141,7 @@ export const cartSlice = createSlice({
         const existItemQty = existItem ? existItem.qty : 0
 
         if (existItem) {
-          item.qty = Number(existItemQty) + Number(item.qty)
+          item.qty = Number(item.qty) ? Number(item.qty) : Number(existItemQty)
           state.cartItems = state.cartItems.map((x) =>
             x.id === existItem.id ? item : x
           )

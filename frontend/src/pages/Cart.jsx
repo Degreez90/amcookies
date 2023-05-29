@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { removeFromCart } from '../features/cart/cartSlice'
+import { cartAddItem, removeFromCart } from '../features/cart/cartSlice'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
@@ -11,6 +12,12 @@ const Cart = () => {
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart({ id: id }))
+  }
+
+  const [qty, setQty] = useState(null)
+
+  const addToCartHandler = () => {
+    dispatch(cartAddItem({ item: cartItems.id, qty }))
   }
 
   return (
@@ -46,7 +53,14 @@ const Cart = () => {
                   <div className='w-full md:w-1/5 flex items-center justify-center'>
                     <select
                       value={item.qty}
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={(e) =>
+                        dispatch(
+                          cartAddItem({
+                            item: item.id,
+                            qty: Number(e.target.value),
+                          })
+                        )
+                      }
                       className='rounded-md border-gray-400'
                     >
                       {Array.from({ length: 12 }, (_, i) => (
