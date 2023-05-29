@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Card = ({ products }) => {
   // console.log(products.name);
   return (
-    <div className='mt-5 mx-3 card w-64 bg-base-100 shadow-xl'>
+    <div className='mt-5 mx-3 card w-64 bg-gray-700 shadow-xl'>
       <Link to={`/details/${products._id}`}>
         <figure>
           <img

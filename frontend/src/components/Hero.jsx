@@ -23,7 +23,7 @@ const Hero = () => {
       >
         <div className='w-full h-full sticky bg-slate-800/[.30]'>
           <div className='bg-slate-700 shadow-lg shadow-gray-900'>
-            <nav className='flex py-3 px-3 mx-auto items-center container'>
+            <nav className='flex py-3 px-3 mx-auto items-center text-white container'>
               <div className='w-full'>
                 <Link to={'/'}>AM</Link>
               </div>
