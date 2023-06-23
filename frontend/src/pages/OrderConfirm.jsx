@@ -1,9 +1,23 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const OrderConfirm = () => {
   const order = useSelector((state) => state.order)
   const { orderDetails } = order
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!orderDetails._id) {
+      navigate('/')
+    }
+  }, [navigate, orderDetails._id])
+
+  if (!orderDetails.nonRegUser) {
+    return null
+  }
 
   return (
     <div className='container'>
@@ -73,7 +87,12 @@ const OrderConfirm = () => {
             </div>
             <div className='flex border-b py-3 px-4'>
               <div className='basis-0 grow'>Items</div>
-              <div className='basis-0 grow'>$</div>
+              <div className='basis-0 grow'>
+                ${' '}
+                {orderDetails.orderItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </div>
             </div>
             <div className='flex border-b py-3 px-4'>
               <div className='basis-0 grow'>Shipping</div>
@@ -96,74 +115,3 @@ const OrderConfirm = () => {
 }
 
 export default OrderConfirm
-
-// import React from 'react'
-// import { useSelector } from 'react-redux'
-
-// const OrderConfirm = () => {
-//   const order = useSelector((state) => state.order)
-//   const { orderDetails } = order
-
-//   return (
-//     <div className='container mx-auto p-8'>
-//       <h2 className='text-3xl font-bold mb-4 text-slate-400'>
-//         Thank You for Your Purchase {orderDetails.nonRegUser.firstName}
-//       </h2>
-//       <div className='mb-4 text-slate-400 text-xl font-semibold'>
-//         Order Confirmation #:{orderDetails._id}
-//       </div>
-//       <h2 className='text-2xl font-bold mb-4 text-slate-400'>Details</h2>
-//       <div className='mb-4'>
-//         <div className='text-slate-400 text-xl font-semibold'>
-//           <div>
-//             First Name:{' '}
-//             <span className='text-slate-400 text-base font-normal'>
-//               {orderDetails.nonRegUser.firstName}
-//             </span>
-//           </div>
-//         </div>
-//         <div className='text-slate-400 text-xl font-semibold'>
-//           Last Name:{' '}
-//           <span className='text-slate-400 text-base font-normal'>
-//             {orderDetails.nonRegUser.lastName}
-//           </span>
-//         </div>
-//         <div className='text-slate-400 text-xl font-semibold'>
-//           Address:{' '}
-//           <span className='text-slate-400 text-base font-normal'>
-//             {orderDetails.shippingAddress.address}
-//           </span>
-//         </div>
-//         <div className='text-slate-400 text-xl font-semibold'>
-//           City:{' '}
-//           <span className='text-slate-400 text-base font-normal'>
-//             {orderDetails.shippingAddress.city}
-//           </span>
-//         </div>
-//         <div className='text-slate-400 text-xl font-semibold'>
-//           Postal Code:{' '}
-//           <span className='text-slate-400 text-base font-normal'>
-//             {orderDetails.shippingAddress.postalCode}
-//           </span>
-//         </div>
-//       </div>
-//       <h2 className='text-2xl font-bold mb-4 text-slate-400'>Items</h2>
-//       <div>
-//         {orderDetails.orderItems.map((items) => (
-//           <div key={items.id} className='flex items-center mb-4'>
-//             <div className='mr-4'>{items.name}</div>
-//             <div className='mr-4 w-full '>{items.price}</div>
-//             <div>
-//               <img className='h-40 w-40' src={items.image} alt={items.name} />
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//       <div className='mt-4 text-2xl font-bold text-slate-400'>
-//         Total: ${orderDetails.totalPrice}
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default OrderConfirm

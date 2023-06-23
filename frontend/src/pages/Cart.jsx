@@ -29,12 +29,12 @@ const Cart = () => {
         {cartItems.length === 0 ? (
           <div>Your cart is empty</div>
         ) : (
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-10 md:grid-cols-3'>
             <div className='col-span-2'>
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className='flex flex-col md:flex-row border-b py-3'
+                  className='flex flex-col md:flex-row border-b border-gray-400 py-3'
                 >
                   <div className='w-full md:w-1/5 mr-4 md:mr-0 mb-2 md:mb-0'>
                     <img

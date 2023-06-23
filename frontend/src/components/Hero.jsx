@@ -25,14 +25,16 @@ const Hero = () => {
           <div className='bg-slate-700 shadow-lg shadow-gray-900'>
             <nav className='flex py-3 px-3 mx-auto items-center text-white container'>
               <div className='w-full'>
-                <Link to={'/'}>AM</Link>
+                <Link to={'/'}>AM COOKIES</Link>
               </div>
               <div>
                 <ul className='flex space-x-3'>
                   <li>
                     <NavLink to={'/'}>Cookies</NavLink>
                   </li>
-                  <li>About</li>
+                  <li>
+                    <NavLink to={'/about'}>About</NavLink>
+                  </li>
                   <li>Contact</li>
                 </ul>
               </div>
@@ -41,7 +43,7 @@ const Hero = () => {
                   <span>PF</span>
                 </div>
               </div> */}
-              <div className='dropdown dropdown-end'>
+              <div className='dropdown dropdown-end ml-3'>
                 <label tabIndex={0} className='btn btn-ghost btn-circle'>
                   <div className='indicator'>
                     <svg
@@ -76,7 +78,7 @@ const Hero = () => {
                       {count ? count : 0} Items
                     </span>
                     <span className='text-info'>
-                      Subtotal:
+                      Subtotal:{' '}
                       {cartItems
                         .reduce((acc, item) => acc + item.qty * item.price, 0)
                         .toFixed(2)}

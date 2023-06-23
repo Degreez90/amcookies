@@ -137,7 +137,7 @@ const PlaceOrder = () => {
       <div className='flex flex-col md:flex-row'>
         <div className='md:w-8/12 p-5'>
           <div className='Flex flex-col p-5'>
-            <div className=' mb-2 border-b'>
+            <div className=' mb-2 border-b border-custom-gray '>
               {orderDetails._id ? (
                 <div>
                   <h2 className='mb-2 font-bold text-2xl tracking-widest'>
@@ -157,7 +157,7 @@ const PlaceOrder = () => {
               <p>Email: {shipping.email} </p>
               <p>Address: {shipping.address}</p>
             </div>
-            <div className='py-3 mb-2 border-b'>
+            <div className='py-3 mb-2 border-b border-custom-gray '>
               <h2 className='mb-2 font-bold text-2xl tracking-widest'>
                 PAYMENT METHOD
               </h2>
@@ -171,7 +171,7 @@ const PlaceOrder = () => {
                 {cartItems.map((item) => (
                   <div
                     key={item.id}
-                    className='flex flex-col items-center md:flex-row border-b py-3'
+                    className='flex flex-col items-center md:flex-row border-b border-custom-gray py-3'
                   >
                     <div className='md:w-1/5 md:mr-0 mb-2 md:mb-0'>
                       <img
@@ -215,11 +215,11 @@ const PlaceOrder = () => {
         </div>
         <figure></figure>
         <div className='py-3 px-4 md:w-4/12'>
-          <div className='border'>
-            <div className='flex flex-col border-b p-5 text-2xl font-bold'>
+          <div className='border border-custom-gray '>
+            <div className='flex flex-col border-b border-custom-gray  p-5 text-2xl font-bold'>
               ORDER SUMMARY
             </div>
-            <div className='flex border-b py-3 px-4'>
+            <div className='flex border-b border-custom-gray  py-3 px-4'>
               <div className='basis-0 grow'>Items</div>
               <div className='basis-0 grow'>
                 $
@@ -228,20 +228,20 @@ const PlaceOrder = () => {
                   .toFixed(2)}
               </div>
             </div>
-            <div className='flex border-b py-3 px-4'>
+            <div className='flex border-b border-custom-gray  py-3 px-4'>
               <div className='basis-0 grow'>Shipping</div>
               <div className='basis-0 grow'>$ 0</div>
             </div>
-            <div className='flex border-b py-3 px-4'>
+            <div className='flex border-b border-custom-gray  py-3 px-4'>
               <div className='basis-0 grow'>Tax</div>
               <div className='basis-0 grow'>$ {taxPrice}</div>
             </div>
-            <div className='flex border-b py-3 px-4'>
+            <div className='flex border-b border-custom-gray  py-3 px-4'>
               <div className='basis-0 grow'>Total</div>
               <div className='basis-0 grow'>$ {totalPrice}</div>
             </div>
-            <div className='flex border-b py-3 px-4'></div>
-            <div className='flex border-b py-3 px-4'>
+            <div className='flex border-b border-custom-gray  py-3 px-4'></div>
+            <div className='flex border-b border-custom-gray  py-3 px-4'>
               {isPending ? (
                 <p>loading..</p>
               ) : (
