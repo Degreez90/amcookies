@@ -22,7 +22,7 @@ const Details = () => {
 
   return (
     <>
-      <Product product={product} />c
+      <Product product={product} />
     </>
   )
 }
