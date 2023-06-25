@@ -25,7 +25,7 @@ const Product = ({ product }) => {
   // }
 
   return (
-    <div className='card lg:card-side bg-base-100 shadow-xl mt-10'>
+    <div className='card lg:card-side customCard shadow-xl mt-10'>
       <figure>
         <img className=' h-96 w-96' src={product.image} />
       </figure>

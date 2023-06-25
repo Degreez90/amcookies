@@ -9,3 +9,7 @@ p {
 h2 {
   padding: 0.5rem 0;
 }
+
+.customCard {
+  background-color: rgb(55 65 81);
+}
