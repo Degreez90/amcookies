@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react'
 import Details from './pages/Details'
 import Home from './pages/Home'
 import About from './pages/About'
+import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 import Layout from './layout/Layout'
 import Shipping from './pages/Shipping'
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />} />
       <Route path='about' element={<About />} />
+      <Route path='contact' element={<Contact />} />
       <Route path='details/:id' element={<Details />} />
       <Route path='cart' element={<Cart />} />
       <Route path='shipping' element={<Shipping />} />

@@ -35,7 +35,9 @@ const Hero = () => {
                   <li>
                     <NavLink to={'/about'}>About</NavLink>
                   </li>
-                  <li>Contact</li>
+                  <li>
+                    <NavLink to={'/contact'}>Contact</NavLink>
+                  </li>
                 </ul>
               </div>
               {/* <div className='mx-4 avatar placeholder'>

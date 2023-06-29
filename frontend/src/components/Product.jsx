@@ -25,18 +25,24 @@ const Product = ({ product }) => {
   // }
 
   return (
-    <div className='card lg:card-side customCard shadow-xl mt-10'>
+    <div className='card w-fit mx-auto lg:card-side customCard shadow-xl mt-10'>
       <figure>
         <img className=' h-96 w-96' src={product.image} />
       </figure>
       <div className='card-body'>
-        <h2 className='card-title'>{product.name}</h2>
-        <p className='grow-0'>{product.description}</p>
+        <h2 className='card-title text-white'>{product.name}</h2>
+        <p className='grow-0 text-white'>{product.description}</p>
         <div>
-          {product.inStock ? 'Status: In Stock' : 'Status: Out of Stock'}
+          <span className='text-white'>Status: </span>
+          <span
+            className={`${product.inStock ? 'text-green-600' : 'text-red-600'}`}
+          >
+            {product.inStock ? 'In Stock' : 'Out of Stock'}
+          </span>
         </div>
-        <div>
+        <div className='mb-4 grow'>
           <select
+            className=' bg-white text-black'
             name=''
             id=''
             value={qty}
@@ -49,7 +55,7 @@ const Product = ({ product }) => {
             ))}
           </select>
         </div>
-        <div className='card-actions justify-end'>
+        <div className='card-actions justify-start'>
           <button
             className='btn btn-primary'
             onClick={addToCartHandler}

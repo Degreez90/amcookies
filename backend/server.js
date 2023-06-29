@@ -5,6 +5,7 @@ import colors from 'colors'
 import connectDB from './config/db.js'
 import orderRoutes from './routes/orderRoutes.js'
 import productRoutes from './routes/productRoutes.js'
+import mailerRoutes from './routes/mailerRoutes.js'
 const PORT = process.env.PORT || 6000
 
 dotenv.config()
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }))
 // Routes
 app.use('/api/products', productRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/mailer', mailerRoutes)
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )
