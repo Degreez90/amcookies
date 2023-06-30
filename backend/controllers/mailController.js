@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const sendMessage = asyncHandler(async (req, res) => {
-  const { from, subject, text } = req.body
+  const { from, subject, message, firstName, LastName, phoneNumber } = req.body
 
   const key = process.env.MAIL_API_KEY
   const DOMAIN = process.env.DOMAIN
@@ -23,7 +23,10 @@ const sendMessage = asyncHandler(async (req, res) => {
     from,
     to: 'offitt90@gmail.com',
     subject,
-    text,
+    text: `First Name: ${firstName}
+    \nLast Name: ${LastName}
+    \nPhone Number: ${phoneNumber}
+    \n\n${message}`,
   }
   console.log(messageData)
 

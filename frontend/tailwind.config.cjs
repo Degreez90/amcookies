@@ -27,7 +27,9 @@ module.exports = {
       '2xl': '1200px',
       // => @media (min-width: 1536px) { ... }
     },
-    fontFamily: {},
+    fontFamily: {
+      g1: ['Belanosima'],
+    },
   },
   plugins: [require('daisyui')],
 }

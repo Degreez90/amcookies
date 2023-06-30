@@ -16,18 +16,18 @@ const Hero = () => {
         className='mx-auto w-full h-[500px]'
         style={{
           backgroundImage: `url(/images/banner.jpg)`,
-          backgroundPosition: 'center',
-          backgroundSize: '100% 100%',
+          backgroundPosition: '50% 70%',
+          backgroundSize: '100% 900px',
           backgroundRepeat: 'no-repeat',
         }}
       >
         <div className='w-full h-full sticky bg-slate-800/[.30]'>
           <div className='bg-slate-700 shadow-lg shadow-gray-900'>
             <nav className='flex py-3 px-3 mx-auto items-center text-white container'>
-              <div className='w-full'>
+              <div className='w-full font-g1 text-xl'>
                 <Link to={'/'}>AM COOKIES</Link>
               </div>
-              <div>
+              <div className='font-g1 text-xl'>
                 <ul className='flex space-x-3'>
                   <li>
                     <NavLink to={'/'}>Cookies</NavLink>
