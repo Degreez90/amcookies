@@ -11,9 +11,12 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
 import { createOrder } from '../features/orders/orderSlice'
 import { resetOrder } from '../features/orders/orderSlice'
 import { clearLocalStorage, resetCart } from '../features/cart/cartSlice'
+import { toast } from 'react-toastify'
 
 const PlaceOrder = () => {
   const [sdkReady, setSdkReady] = useState(false)
+  const [toastDisplayed, setToastDisplayed] = useState(false)
+
   const [{ isPending }] = usePayPalScriptReducer()
 
   const cart = useSelector((state) => state.cart)
@@ -27,20 +30,45 @@ const PlaceOrder = () => {
 
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (!cart.payment || cartItems.length === 0) {
+  // if (cartItems.length === 0 && !toastDisplayed) {
+  //   toast.error('No items in cart')
+  //   setToastDisplayed(true)
+  //   setTimeout(() => {
+  //     navigate('/')
+  //   }, 2000)
+  // } else if (!cart.payment && !toastDisplayed) {
+  //   toast.error('No items in cart twice')
+  //   setToastDisplayed(true)
+  //   setTimeout(() => {
   //     navigate('/payment')
-  //   }
-  // }, [navigate, cart])
+  //   }, 2000)
+  // }
 
   useEffect(() => {
     if (orderDetails._id) {
       navigate('/orderconfirm')
-    }
-    if (!cart.payment || cartItems.length === 0) {
+    } else if (cartItems.length === 0 && !toastDisplayed) {
+      console.log('why')
+      toast.error('No items in cart', {
+        toastId: 'success1',
+      })
+      setToastDisplayed(true)
+      navigate('/')
+    } else if (!cart.payment && !toastDisplayed) {
+      toast.error('No payment specified', {
+        toastId: 'success1',
+      })
+      setToastDisplayed(true)
+
       navigate('/payment')
     }
-  }, [navigate, orderDetails, cart])
+  }, [
+    navigate,
+    orderDetails._id,
+    cartItems.length,
+    cart.payment,
+    toastDisplayed,
+  ])
 
   //calc prices
   const addDecimals = (num) => {
@@ -68,7 +96,7 @@ const PlaceOrder = () => {
       setClientId(data)
     }
     addPayPalScript()
-  }, [])
+  }, [setClientId])
 
   useEffect(() => {
     if (orderDetails._id) {

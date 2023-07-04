@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveShippingAddress } from '../features/cart/cartSlice'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CheckoutSteps from '../components/CheckoutSteps'
+import { toast, ToastContainer } from 'react-toastify'
+import states from '../utils/states'
 
 const Shipping = () => {
   const cart = useSelector((state) => state.cart)
@@ -15,31 +17,64 @@ const Shipping = () => {
   const [email, setEmail] = useState(shipping.email || '')
   const [phoneNumber, setPhoneNumber] = useState(shipping.phoneNumber || '')
   const [city, setCity] = useState(shipping.city || '')
-  const [zipCode, setZipCode] = useState(shipping.city || '')
+  const [state, setState] = useState(shipping.state || 'AL')
+  const [zipCode, setZipCode] = useState(shipping.zipCode || '')
   const [country, setCountry] = useState(shipping.country || 'United States')
+  const [isValid, setIsValid] = useState(false)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    return emailRegex.test(email)
+  }
+
+  const formatPhoneNumber = (phoneNumber) => {
+    const formattedNumber = phoneNumber.replace(
+      /(\d{3})(\d{3})(\d{4})/,
+      '($1)-$2-$3'
+    )
+
+    return formattedNumber
+  }
+
+  const phoneHandler = (e) => {
+    const input = e.target.value.replace(/\D/g, '').slice(0, 10)
+    setPhoneNumber(formatPhoneNumber(input))
+  }
+
+  const zipcodeHandler = (e) => {
+    const input = e.target.value.replace(/\D/g, '').slice(0, 5)
+    setZipCode(input)
+  }
+
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(
-      saveShippingAddress({
-        firstName,
-        lastName,
-        address,
-        email,
-        phoneNumber,
-        city,
-        zipCode,
-        country,
-      })
-    )
-    navigate('/payment')
+
+    if (validateEmail(email) === false) {
+      toast.error('Email Address Not Valid')
+    } else {
+      dispatch(
+        saveShippingAddress({
+          firstName,
+          lastName,
+          address,
+          email,
+          phoneNumber,
+          city,
+          state,
+          zipCode,
+          country,
+        })
+      )
+      navigate('/payment')
+    }
   }
 
   return (
     <div>
+      <ToastContainer />
       <div className='container px-4 md:px-0'>
         <CheckoutSteps step1 />
         <h1 className='text-3xl font-bold text-center my-4 md:text-left'>
@@ -99,7 +134,7 @@ const Shipping = () => {
                 value={phoneNumber}
                 type='text'
                 required
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={phoneHandler}
               />
             </div>
             <div className='flex flex-col mb-4'>
@@ -129,6 +164,23 @@ const Shipping = () => {
               />
             </div>
             <div className='flex flex-col mb-4'>
+              <label htmlFor='state' className='mb-2 font-medium'>
+                State:
+              </label>
+              <select
+                className='p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500'
+                value={state}
+                required
+                onChange={(e) => setState(e.target.value)}
+              >
+                {states.map((state) => (
+                  <option key={state.code} value={state.code}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='flex flex-col mb-4'>
               <label htmlFor='zipCode' className='mb-2 font-medium'>
                 Zip Code:
               </label>
@@ -138,7 +190,7 @@ const Shipping = () => {
                 value={zipCode}
                 type='text'
                 required
-                onChange={(e) => setZipCode(e.target.value)}
+                onChange={zipcodeHandler}
               />
             </div>
             <div className='flex flex-col mb-4'>

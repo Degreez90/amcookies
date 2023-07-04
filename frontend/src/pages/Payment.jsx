@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { savePaymentMethod } from '../features/cart/cartSlice'
 import { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 const Payment = () => {
   const cart = useSelector((state) => state.cart)
-  const { shipping } = cart
+  const { shipping, cartItems } = cart
 
   const navigate = useNavigate()
 
@@ -26,8 +27,13 @@ const Payment = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(savePaymentMethod(paymentMethod))
-    navigate('/placeorder')
+
+    if (cartItems.length === 0) {
+      toast.error('No items in cart')
+    } else {
+      dispatch(savePaymentMethod(paymentMethod))
+      navigate('/placeorder')
+    }
   }
 
   return (

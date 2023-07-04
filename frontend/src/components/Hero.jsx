@@ -80,7 +80,7 @@ const Hero = () => {
                       {count ? count : 0} Items
                     </span>
                     <span className='text-info'>
-                      Subtotal:{' '}
+                      Subtotal:{' $'}
                       {cartItems
                         .reduce((acc, item) => acc + item.qty * item.price, 0)
                         .toFixed(2)}
