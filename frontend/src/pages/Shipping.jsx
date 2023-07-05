@@ -39,6 +39,16 @@ const Shipping = () => {
     return formattedNumber
   }
 
+  const validatePhone = (phoneNumber) => {
+    const phoneRegex = /^\(\d{3}\)-\d{3}-\d{4}$/
+    return phoneRegex.test(phoneNumber)
+  }
+
+  const validateZip = (zipCode) => {
+    const zipRegex = /^\d{5}$/
+    return zipRegex.test(zipCode)
+  }
+
   const phoneHandler = (e) => {
     const input = e.target.value.replace(/\D/g, '').slice(0, 10)
     setPhoneNumber(formatPhoneNumber(input))
@@ -54,6 +64,10 @@ const Shipping = () => {
 
     if (validateEmail(email) === false) {
       toast.error('Email Address Not Valid')
+    } else if (validatePhone(phoneNumber) === false) {
+      toast.error('Phone Number not valid')
+    } else if (validateZip(zipCode) === false) {
+      toast.error('Invalid Zipcode')
     } else {
       dispatch(
         saveShippingAddress({

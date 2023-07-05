@@ -18,7 +18,16 @@ const orderSchema = mongoose.Schema(
         type: String,
       },
       phoneNumber: {
-        type: Number,
+        type: String,
+        validate: {
+          validator: function (value) {
+            // Define your regex pattern
+            const regex = /^\(\d{3}\)-\d{3}-\d{4}$/
+            return regex.test(value)
+          },
+          message:
+            'Invalid value for myField. Only alphanumeric characters are allowed.',
+        },
       },
     },
     orderItems: [

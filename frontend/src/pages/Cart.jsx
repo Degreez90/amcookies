@@ -34,7 +34,7 @@ const Cart = () => {
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className='flex flex-col md:flex-row border-b border-gray-400 py-3'
+                  className='flex flex-col items-center md:flex-row border-b border-gray-400 py-3'
                 >
                   <div className='w-full md:w-1/5 mr-4 md:mr-0 mb-2 md:mb-0'>
                     <img
@@ -43,9 +43,10 @@ const Cart = () => {
                       className='w-full h-auto md:max-h-24 md:object-contain'
                     />
                   </div>
-                  <div className='flex-grow md:w-2/5'>
-                    <h2 className='text-lg font-medium'>{item.name}</h2>
-                    <p className='text-gray-500'>{item.description}</p>
+                  <div className='flex-grow md:w-2/5m items-center justify-center'>
+                    <h2 className='flex justify-center text-lg font-medium'>
+                      {item.name}
+                    </h2>
                   </div>
                   <div className='w-full md:w-1/5 flex items-center justify-center'>
                     <span className='text-lg font-medium'>${item.price}</span>
