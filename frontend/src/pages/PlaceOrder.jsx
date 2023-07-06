@@ -48,7 +48,6 @@ const PlaceOrder = () => {
     if (orderDetails._id) {
       navigate('/orderconfirm')
     } else if (cartItems.length === 0 && !toastDisplayed) {
-      console.log('why')
       toast.error('No items in cart', {
         toastId: 'success1',
       })
@@ -56,7 +55,7 @@ const PlaceOrder = () => {
       navigate('/')
     } else if (!cart.payment && !toastDisplayed) {
       toast.error('No payment specified', {
-        toastId: 'success1',
+        toastId: 'success2',
       })
       setToastDisplayed(true)
 
@@ -98,13 +97,6 @@ const PlaceOrder = () => {
     addPayPalScript()
   }, [setClientId])
 
-  useEffect(() => {
-    if (orderDetails._id) {
-      dispatch(resetCart())
-      dispatch(clearLocalStorage())
-    }
-  }, [dispatch, orderDetails._id])
-
   const initialOptions = {
     'client-id': clientId,
     currency: 'USD',
@@ -138,6 +130,7 @@ const PlaceOrder = () => {
           shippingAddress: {
             address: shipping.address,
             city: shipping.city,
+            state: shipping.state,
             postalCode: shipping.zipCode,
             country: shipping.country,
           },

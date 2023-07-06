@@ -11,8 +11,6 @@ const sendMessage = asyncHandler(async (req, res) => {
   const key = process.env.MAIL_API_KEY
   const DOMAIN = process.env.DOMAIN
 
-  console.log(key + DOMAIN)
-
   const mailgun = new Mailgun(FormData)
   const client = mailgun.client({
     username: 'api',
@@ -28,7 +26,6 @@ const sendMessage = asyncHandler(async (req, res) => {
     \nPhone Number: ${phoneNumber}
     \n\n${message}`,
   }
-  console.log(messageData)
 
   client.messages
     .create(DOMAIN, messageData)
@@ -40,8 +37,12 @@ const sendMessage = asyncHandler(async (req, res) => {
     })
 })
 
+//Order confirmation mail
 const mailOrderConfirmation = asyncHandler(async (req, res) => {
-  const { data } = req.body
+  //destructuring data receieved from Frontend order details
+  const {
+    orderDetails: { nonRegUser, shippingAddress, orderItems, _id },
+  } = req.body
 
   const key = process.env.MAIL_API_KEY
   const DOMAIN = process.env.DOMAIN
@@ -52,17 +53,28 @@ const mailOrderConfirmation = asyncHandler(async (req, res) => {
     key: key,
   })
 
+  let itemsText = ''
+  orderItems.forEach((item) => {
+    itemsText += `\nName: ${item.name}, qty: ${item.qty}\n`
+  })
+
   const messageData = {
-    from,
-    to: data.nonRegUser.email,
-    subject,
-    text: `First Name: ${firstName}
-    \nLast Name: ${LastName}
-    \nEmail: ${email}
-    \nPhone Number: ${phoneNumber}
-    \nPhone Number: ${phoneNumber}
-    \n\n${message}`,
+    from: `amookies@gmail.com`,
+    to: [nonRegUser.email],
+    subject: `AM Cookies Order Connfirmation`,
+    text: `Thank You for Your Purchase!
+    \nYour Order # ${_id}
+    \nFirst Name: ${nonRegUser.firstName}
+    \nLast Name: ${nonRegUser.lastName}
+    \nEmail: ${nonRegUser.email}
+    \nPhone Number: ${nonRegUser.phoneNumber}
+    \nShipping Address: ${shippingAddress.address}
+    \nState: ${shippingAddress.state}
+    \nZip Code: ${shippingAddress.postalCode}
+    \nCountry: ${shippingAddress.country}
+    \nitems: ${itemsText}`,
   }
+
   console.log(messageData)
 
   client.messages

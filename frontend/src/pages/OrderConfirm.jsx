@@ -1,20 +1,27 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { clearLocalStorage, resetCart } from '../features/cart/cartSlice'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const OrderConfirm = () => {
   const order = useSelector((state) => state.order)
   const { orderDetails } = order
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const API_URL = '/api/mailer'
+  const API_URL = '/api/mailer/order'
 
   useEffect(() => {
     if (!orderDetails._id) {
       navigate('/')
-    } else {
+    } else if (orderDetails._id) {
+      dispatch(resetCart())
+      dispatch(clearLocalStorage())
+
       const data = {
         orderDetails,
       }
@@ -22,16 +29,15 @@ const OrderConfirm = () => {
       const sendMessage = async (data) => {
         const response = await axios.post(API_URL, data)
         if (response.data) {
-          setResponseMessage(response.data)
-          resetState()
-          toast.success('Your message was sent')
-        } else setResponseMessage('There was an error please try again')
+          console.log(response.data)
+          toast.success('Your Order was placed')
+        } else console.log('There was an error please try again')
         return response.data
       }
 
       sendMessage(data)
     }
-  }, [navigate, orderDetails._id])
+  }, [navigate, orderDetails._id, orderDetails, dispatch])
 
   if (!orderDetails.nonRegUser) {
     return null
