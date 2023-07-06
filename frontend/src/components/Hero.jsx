@@ -8,7 +8,9 @@ const Hero = () => {
 
   const { cartItems } = cart
 
-  const count = cartItems ? cartItems.length : 0
+  const count = cartItems
+    ? cartItems.reduce((acc, item) => acc + parseInt(item.qty), 0)
+    : 0
 
   return (
     <div>
@@ -77,7 +79,7 @@ const Hero = () => {
                 >
                   <div className='card-body'>
                     <span className='font-bold text-lg'>
-                      {count ? count : 0} Items
+                      {count ? count.toString() : 0} Items
                     </span>
                     <span className='text-info'>
                       Subtotal:{' $'}

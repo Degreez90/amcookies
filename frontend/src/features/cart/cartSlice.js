@@ -67,25 +67,6 @@ export const removeFromCart = createAsyncThunk(
   }
 )
 
-// export const saveShippingAddress = createAsyncThunk(
-//   'cart/saveShipping',
-//   async (data, thunkAPI) => {
-//     try {
-//       console.log(data)
-//       return data
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
-
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,

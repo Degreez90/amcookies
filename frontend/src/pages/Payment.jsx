@@ -14,6 +14,8 @@ const Payment = () => {
   useEffect(() => {
     if (!shipping.address) {
       navigate('/shipping')
+    } else if (cartItems.length === 0) {
+      navigate('/')
     }
   }, [shipping.address, navigate])
 

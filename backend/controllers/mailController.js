@@ -40,4 +40,39 @@ const sendMessage = asyncHandler(async (req, res) => {
     })
 })
 
-export { sendMessage }
+const mailOrderConfirmation = asyncHandler(async (req, res) => {
+  const { data } = req.body
+
+  const key = process.env.MAIL_API_KEY
+  const DOMAIN = process.env.DOMAIN
+
+  const mailgun = new Mailgun(FormData)
+  const client = mailgun.client({
+    username: 'api',
+    key: key,
+  })
+
+  const messageData = {
+    from,
+    to: data.nonRegUser.email,
+    subject,
+    text: `First Name: ${firstName}
+    \nLast Name: ${LastName}
+    \nEmail: ${email}
+    \nPhone Number: ${phoneNumber}
+    \nPhone Number: ${phoneNumber}
+    \n\n${message}`,
+  }
+  console.log(messageData)
+
+  client.messages
+    .create(DOMAIN, messageData)
+    .then((result) => {
+      res.status(200).send('Message sent')
+    })
+    .catch((err) => {
+      throw new Error(err + ' Message not sent')
+    })
+})
+
+export { sendMessage, mailOrderConfirmation }

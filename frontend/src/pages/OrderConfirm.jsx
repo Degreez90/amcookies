@@ -9,9 +9,27 @@ const OrderConfirm = () => {
 
   const navigate = useNavigate()
 
+  const API_URL = '/api/mailer'
+
   useEffect(() => {
     if (!orderDetails._id) {
       navigate('/')
+    } else {
+      const data = {
+        orderDetails,
+      }
+
+      const sendMessage = async (data) => {
+        const response = await axios.post(API_URL, data)
+        if (response.data) {
+          setResponseMessage(response.data)
+          resetState()
+          toast.success('Your message was sent')
+        } else setResponseMessage('There was an error please try again')
+        return response.data
+      }
+
+      sendMessage(data)
     }
   }, [navigate, orderDetails._id])
 
@@ -104,7 +122,9 @@ const OrderConfirm = () => {
             </div>
             <div className='flex border-b py-3 px-4'>
               <div className='basis-0 grow'>Total</div>
-              <div className='basis-0 grow'>$ {orderDetails.totalPrice}</div>
+              <div className='basis-0 grow'>
+                $ {orderDetails.totalPrice.toFixed(2)}
+              </div>
             </div>
             <div className='flex border-b py-3 px-4'></div>
           </div>
