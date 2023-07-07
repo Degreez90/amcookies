@@ -8,8 +8,11 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Shipping from './Shipping'
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js'
-import { createOrder } from '../features/orders/orderSlice'
-import { resetOrder } from '../features/orders/orderSlice'
+import {
+  createOrder,
+  resetOrder,
+  resetSuccess,
+} from '../features/orders/orderSlice'
 import { clearLocalStorage, resetCart } from '../features/cart/cartSlice'
 import { toast } from 'react-toastify'
 
@@ -24,7 +27,7 @@ const PlaceOrder = () => {
   const { shipping } = cart
 
   const order = useSelector((state) => state.order)
-  const { orderDetails } = order
+  const { orderDetails, isSuccess } = order
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -32,7 +35,8 @@ const PlaceOrder = () => {
   const paymentMethod = localStorage.getItem('paymentMethod')
 
   useEffect(() => {
-    if (orderDetails._id) {
+    if (isSuccess) {
+      dispatch(resetSuccess())
       navigate('/orderconfirm')
     } else if (cartItems.length === 0 && !toastDisplayed) {
       toast.error('No items in cart', {
@@ -104,7 +108,7 @@ const PlaceOrder = () => {
   const paypalApprove = async (data, action) => {
     try {
       const details = await action.order.capture()
-      console.log(details)
+
       dispatch(
         createOrder({
           nonRegUser: {
@@ -127,7 +131,7 @@ const PlaceOrder = () => {
             update_time: details.update_time,
             emails_address: details.payer.email_address,
           },
-          paymentMethod: paymentMethod,
+          paymentMethod: cart.payment,
           itemsPrice: price,
           shippingPrice: shippingPrice,
           taxPrice: taxPrice,
@@ -146,7 +150,7 @@ const PlaceOrder = () => {
         <div className='md:w-8/12 p-5'>
           <div className='Flex flex-col p-5'>
             <div className=' mb-2 border-b border-custom-gray '>
-              {orderDetails._id ? (
+              {/* {orderDetails._id ? (
                 <div>
                   <h2 className='mb-2 font-bold text-2xl tracking-widest'>
                     THANK YOU FOR YOUR PURCHASE
@@ -155,7 +159,7 @@ const PlaceOrder = () => {
                     Order Confirmation#: {orderDetails._id}
                   </h2>
                 </div>
-              ) : null}
+              ) : null} */}
               <h2 className='mb-2 font-bold text-2xl tracking-widest'>
                 SHIPPING
               </h2>

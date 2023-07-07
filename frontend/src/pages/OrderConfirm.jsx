@@ -2,13 +2,14 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { resetOrder } from '../features/orders/orderSlice'
 import { clearLocalStorage, resetCart } from '../features/cart/cartSlice'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
 const OrderConfirm = () => {
   const order = useSelector((state) => state.order)
-  const { orderDetails, orderIsPayed } = order
+  const { orderDetails, isSuccess } = order
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -16,9 +17,7 @@ const OrderConfirm = () => {
   const API_URL = '/api/mailer/order'
 
   useEffect(() => {
-    if (!orderDetails._id) {
-      navigate('/')
-    } else if (orderDetails._id) {
+    if (orderDetails._id) {
       dispatch(resetCart())
       dispatch(clearLocalStorage())
 
@@ -36,6 +35,8 @@ const OrderConfirm = () => {
       }
 
       sendMessage(data)
+    } else if (!orderDetails._id && isSuccess === false) {
+      navigate('/')
     }
   }, [navigate, orderDetails._id, orderDetails, dispatch])
 

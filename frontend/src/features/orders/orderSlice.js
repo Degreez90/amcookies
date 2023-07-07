@@ -5,7 +5,7 @@ const initialState = {
   order: [],
   orderDetails: [],
   Shipping: {},
-  orderIsPayed: false,
+  orderDisplay: [],
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -54,6 +54,9 @@ export const orderSlice = createSlice({
   initialState,
   reducers: {
     resetOrder: (state) => initialState,
+    resetSuccess: (state) => {
+      state.isSuccess = false
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -64,8 +67,7 @@ export const orderSlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.orderDetails = action.payload
-        state.orderIsPayed = true
-        state.order = []
+        state.orderDisplay = action.payload
         state.shipping = {}
 
         //Remove cart local storage.
@@ -78,5 +80,5 @@ export const orderSlice = createSlice({
   },
 })
 
-export const { resetOrder } = orderSlice.actions
+export const { resetOrder, resetSuccess } = orderSlice.actions
 export default orderSlice.reducer
