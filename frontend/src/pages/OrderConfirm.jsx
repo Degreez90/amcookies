@@ -8,7 +8,7 @@ import axios from 'axios'
 
 const OrderConfirm = () => {
   const order = useSelector((state) => state.order)
-  const { orderDetails } = order
+  const { orderDetails, orderIsPayed } = order
 
   const navigate = useNavigate()
   const dispatch = useDispatch()

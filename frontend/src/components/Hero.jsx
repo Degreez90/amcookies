@@ -24,7 +24,7 @@ const Hero = () => {
         }}
       >
         <div className='w-full h-full sticky bg-slate-800/[.30]'>
-          <div className='bg-slate-700 shadow-lg shadow-gray-900'>
+          <div className='bg-gray-700 shadow-lg shadow-gray-900'>
             <nav className='flex py-3 px-3 mx-auto items-center text-white container'>
               <div className='w-full font-g1 text-xl'>
                 <Link to={'/'}>AM COOKIES</Link>
@@ -75,7 +75,7 @@ const Hero = () => {
                 </label>
                 <div
                   tabIndex={0}
-                  className='mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow'
+                  className='mt-3 card card-compact dropdown-content w-52 bg-gray-800 shadow'
                 >
                   <div className='card-body'>
                     <span className='font-bold text-lg'>

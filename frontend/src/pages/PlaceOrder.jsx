@@ -27,22 +27,9 @@ const PlaceOrder = () => {
   const { orderDetails } = order
 
   const dispatch = useDispatch()
-
   const navigate = useNavigate()
 
-  // if (cartItems.length === 0 && !toastDisplayed) {
-  //   toast.error('No items in cart')
-  //   setToastDisplayed(true)
-  //   setTimeout(() => {
-  //     navigate('/')
-  //   }, 2000)
-  // } else if (!cart.payment && !toastDisplayed) {
-  //   toast.error('No items in cart twice')
-  //   setToastDisplayed(true)
-  //   setTimeout(() => {
-  //     navigate('/payment')
-  //   }, 2000)
-  // }
+  const paymentMethod = localStorage.getItem('paymentMethod')
 
   useEffect(() => {
     if (orderDetails._id) {
@@ -53,7 +40,7 @@ const PlaceOrder = () => {
       })
       setToastDisplayed(true)
       navigate('/')
-    } else if (!cart.payment && !toastDisplayed) {
+    } else if (!paymentMethod && !toastDisplayed) {
       toast.error('No payment specified', {
         toastId: 'success2',
       })
@@ -140,7 +127,7 @@ const PlaceOrder = () => {
             update_time: details.update_time,
             emails_address: details.payer.email_address,
           },
-          paymentMethod: cart.payment,
+          paymentMethod: paymentMethod,
           itemsPrice: price,
           shippingPrice: shippingPrice,
           taxPrice: taxPrice,

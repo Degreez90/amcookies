@@ -166,46 +166,6 @@ export const cartSlice = createSlice({
           })
         )
       })
-    // .addCase(saveShippingAddress.pending, (state) => {
-    //   state.isLoading = true
-    // })
-    // .addCase(saveShippingAddress.fulfilled, (state, action) => {
-    //   state.isLoading = true
-    //   state.isError = false
-    //   state.shipping = action.payload
-
-    //   localStorage.setItem(
-    //     'shippingAddress',
-    //     JSON.stringify({
-    //       data: state.shipping,
-    //       expires: Date.now() + 10800000,
-    //     })
-    //   )
-    // })
-    // .addCase(saveShippingAddress.rejected, (state, action) => {
-    //   state.isLoading = false
-    //   state.isError = true
-    //   state.message = action.payload
-    // })
-    // .addCase(savePaymentMethod.pending, (state, action) => {
-    //   state.isLoading = true
-    // })
-    // .addCase(savePaymentMethod.fulfilled, (state, action) => {
-    //   state.isLoading = false
-    //   state.isError = false
-
-    //   const data = action.payload
-
-    //   state.payment = data
-
-    //   localStorage.setItem(
-    //     'paymentMethod',
-    //     JSON.stringify({
-    //       data: data,
-    //       expires: Date.now() + 10800000,
-    //     })
-    //   )
-    // })
   },
 })
 

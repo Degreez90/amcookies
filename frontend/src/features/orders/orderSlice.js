@@ -5,6 +5,7 @@ const initialState = {
   order: [],
   orderDetails: [],
   Shipping: {},
+  orderIsPayed: false,
   isSuccess: false,
   isError: false,
   isLoading: false,
@@ -63,6 +64,7 @@ export const orderSlice = createSlice({
         state.isLoading = false
         state.isSuccess = true
         state.orderDetails = action.payload
+        state.orderIsPayed = true
         state.order = []
         state.shipping = {}
 
