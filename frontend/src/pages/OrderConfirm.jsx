@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { resetOrder } from '../features/orders/orderSlice'
+import { resetOrder, resetSuccess } from '../features/orders/orderSlice'
 import { clearLocalStorage, resetCart } from '../features/cart/cartSlice'
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -20,6 +20,7 @@ const OrderConfirm = () => {
     if (orderDetails._id) {
       dispatch(resetCart())
       dispatch(clearLocalStorage())
+      dispatch(resetSuccess())
 
       const data = {
         orderDetails,
