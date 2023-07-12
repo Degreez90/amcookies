@@ -38,7 +38,7 @@ const products = [
     numReviews: 0,
   },
   {
-    name: 'Cinemon',
+    name: 'Sugar Cookie',
     image: '/images/sugarcookie.jpg',
     description: 'A delicious cookie with cinemon sugar',
     price: 2.99,

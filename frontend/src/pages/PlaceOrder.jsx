@@ -150,16 +150,6 @@ const PlaceOrder = () => {
         <div className='md:w-8/12 p-5'>
           <div className='Flex flex-col p-5'>
             <div className=' mb-2 border-b border-custom-gray '>
-              {/* {orderDetails._id ? (
-                <div>
-                  <h2 className='mb-2 font-bold text-2xl tracking-widest'>
-                    THANK YOU FOR YOUR PURCHASE
-                  </h2>
-                  <h2 className='mb-2 font-bold text-2xl tracking-widest'>
-                    Order Confirmation#: {orderDetails._id}
-                  </h2>
-                </div>
-              ) : null} */}
               <h2 className='mb-2 font-bold text-2xl tracking-widest'>
                 SHIPPING
               </h2>
