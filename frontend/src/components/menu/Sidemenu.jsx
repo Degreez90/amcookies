@@ -8,6 +8,7 @@ const Sidemenu = ({
   isChecked,
   setIsChecked,
   sideMenuRef,
+  onClickHandler,
 }) => {
   const cart = useSelector((state) => state.cart)
 
@@ -19,21 +20,16 @@ const Sidemenu = ({
 
   //Contains code for all clicks outside of side menu to open and close
 
-  const onClickHandler = () => {
-    toggleMenu()
-    setIsChecked(!isChecked)
-  }
-
   return (
     <div
       ref={sideMenuRef}
       className={`w-[284px] h-screen fixed ${
         isOpen ? `translate-x-[0px]` : `translate-x-[284px]`
-      } transition-transform duration-300 ease-in-out right-0 top-20 bg-slate-950`}
+      } transition-transform duration-300 ease-in-out right-0 top-0 bg-slate-950`}
     >
       <div className='flex p-4 justify-end'>
-        {/* <div className='flex flex-grow'>
-          <button className='btn btn-square'>
+        <div className='flex flex-grow'>
+          <button onClick={onClickHandler} className='btn btn-square'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               className='h-6 w-6'
@@ -49,7 +45,7 @@ const Sidemenu = ({
               />
             </svg>
           </button>
-        </div> */}
+        </div>
         <div className='btn btn-ghost btn-circle'>
           <div className='indicator'>
             <svg

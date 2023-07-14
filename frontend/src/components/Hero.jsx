@@ -4,7 +4,15 @@ import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import Sidemenu from './menu/Sidemenu'
 
-const Hero = ({ toggleMenu, setIsChecked, isChecked, menuButtonRef }) => {
+const Hero = ({
+  toggleMenu,
+  onClickHandler,
+  setIsChecked,
+  isChecked,
+  setIsOpen,
+  isOpen,
+  menuButtonRef,
+}) => {
   const cart = useSelector((state) => state.cart)
 
   const { cartItems } = cart
@@ -12,11 +20,6 @@ const Hero = ({ toggleMenu, setIsChecked, isChecked, menuButtonRef }) => {
   const count = cartItems
     ? cartItems.reduce((acc, item) => acc + parseInt(item.qty), 0)
     : 0
-
-  const onClickHandler = () => {
-    toggleMenu()
-    setIsChecked(!isChecked)
-  }
 
   return (
     <div>
@@ -52,6 +55,7 @@ const Hero = ({ toggleMenu, setIsChecked, isChecked, menuButtonRef }) => {
                 <label className='btn btn-circle swap swap-rotate'>
                   {/* this hidden checkbox controls the state */}
                   <input
+                    className=' z-50'
                     ref={menuButtonRef}
                     type='checkbox'
                     onChange={() => onClickHandler()}

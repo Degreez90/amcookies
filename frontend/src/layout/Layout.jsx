@@ -8,37 +8,51 @@ import Sidemenu from '../components/menu/Sidemenu'
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
-
   const sideMenuRef = useRef(null)
   const menuButtonRef = useRef(null)
 
-  const toggleMenu = () => {
+  const onClickHandler = () => {
     setIsOpen(!isOpen)
+    setIsChecked(!isChecked)
+  }
+
+  const handleButtonClick = (event) => {
+    if (menuButtonRef.current && menuButtonRef.current.contains(event.target)) {
+      setIsOpen(!isOpen)
+      setIsChecked(!isChecked)
+      console.log('inside button')
+      window.removeEventListener('click', handleButtonClick)
+    }
+  }
+
+  const handleClickOutside = (event) => {
+    if (
+      sideMenuRef.current &&
+      !sideMenuRef.current.contains(event.target) &&
+      menuButtonRef.current &&
+      !menuButtonRef.current.contains(event.target) &&
+      event.target !== menuButtonRef.current
+    ) {
+      if (
+        isOpen &&
+        !menuButtonRef.current.contains(event.target) &&
+        event.target !== menuButtonRef.current
+      ) {
+        console.log('we are here')
+        setIsOpen(false)
+        setIsChecked(false)
+      }
+    }
   }
 
   useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        sideMenuRef.current &&
-        !sideMenuRef.current.contains(event.target) &&
-        menuButtonRef.current &&
-        !menuButtonRef.current.contains(event.target)
-      ) {
-        toggleMenu()
-        setIsChecked(!isChecked)
-      } else if (!isOpen && menuButtonRef.current.contains(event.target)) {
-        toggleMenu()
-        setIsChecked(!isChecked)
-      }
-    }
-
     if (isOpen) {
-      document.addEventListener('click', handleOutsideClick)
+      window.addEventListener('click', handleClickOutside)
     }
     return () => {
-      document.removeEventListener('click', handleOutsideClick)
+      window.removeEventListener('click', handleClickOutside)
     }
-  }, [isOpen, setIsChecked])
+  }, [isOpen])
 
   const [isSmallScreen, setIsSmallScreen] = useState(
     window.matchMedia('(max-width: 640px)').matches
@@ -65,11 +79,6 @@ const Layout = () => {
     }
   }, [setIsSmallScreen])
 
-  const onClickHandler = () => {
-    toggleMenu()
-    setIsChecked(!isChecked)
-  }
-
   useEffect(() => {
     if (isOpen && !isSmallScreen) {
       onClickHandler()
@@ -79,11 +88,11 @@ const Layout = () => {
   return (
     <div className='bg-white relative min-h-screen flex flex-col'>
       <ToastContainer />
-      <div className=' z-50'>
+      <div className='z-10'>
         <Hero
-          toggleMenu={toggleMenu}
+          onClickHandler={onClickHandler}
           isOpen={isOpen}
-          isSmallScreen={isSmallScreen}
+          setIsOpen={setIsOpen}
           isChecked={isChecked}
           setIsChecked={setIsChecked}
           menuButtonRef={menuButtonRef}
@@ -92,7 +101,7 @@ const Layout = () => {
       <div className='z-[9999]'>
         <Sidemenu
           isOpen={isOpen}
-          toggleMenu={toggleMenu}
+          onClickHandler={onClickHandler}
           isChecked={isChecked}
           setIsChecked={setIsChecked}
           sideMenuRef={sideMenuRef}
