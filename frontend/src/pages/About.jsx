@@ -23,14 +23,14 @@ const About = () => {
             <div className='flex grow'>
               <div className='grid grid-rows-7 w-full'>
                 {hours.map((day) => (
-                  <div className='col-span-1 row-span-1'>
+                  <div key={day.day} className='col-span-1 row-span-1'>
                     <h2 className='font-semibold text-xl'>{day.day}</h2>
                   </div>
                 ))}
               </div>
               <div className='grid grid-rows-7 w-full'>
                 {hours.map((day) => (
-                  <div className='col-span-1 row-span-1'>
+                  <div key={day.day} className='col-span-1 row-span-1'>
                     <h2 className='font-semibold text-xl'>{day.hours}</h2>
                   </div>
                 ))}

@@ -47,9 +47,9 @@ const Contact = () => {
   }
 
   return (
-    <div className='container p-1 w-full0'>
+    <div className='container p-1 w-full px-4'>
       <ToastContainer />
-      <div className='border-b-2 mb-8 border-gray-400'>
+      <div className='border-b-2 mb-8 border-gray-400 lg:mx-24'>
         <p className='mb-8'>
           Welcome to our Contact Page! We are delighted to provide you with a
           convenient and straightforward way to get in touch with us. Whether
@@ -59,7 +59,7 @@ const Contact = () => {
       </div>
       {responseMessage ? <div>{responseMessage}</div> : <div></div>}
       <form onSubmit={submitHandler}>
-        <div className='px-48 grid grid-cols-2 grid-rows-7 gap-x-16 justify-between'>
+        <div className='md:px-0 lg:px-24 grid sm:grid-cols-2 md:gap-x-4 gap-x-4 grid-cols-2'>
           <div className='border-b-2 mb-8 border-gray-400 col-span-2'>
             <label className='block' htmlFor=''>
               Choose Subject:{' '}
@@ -75,7 +75,7 @@ const Contact = () => {
               <option value='compliment'>Compliment</option>
             </select>
           </div>
-          <div className='mb-8'>
+          <div className='mb-6 col-span-2 sm:col-span-1'>
             <label className='block' htmlFor=''>
               First Name:{' '}
             </label>
@@ -87,7 +87,7 @@ const Contact = () => {
               onChange={(e) => setFirstName(e.target.value)}
             />
           </div>
-          <div className=''>
+          <div className='mb-6 col-span-2 sm:col-span-1'>
             <label className='block' htmlFor=''>
               Last Name:{' '}
             </label>
@@ -99,7 +99,7 @@ const Contact = () => {
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
-          <div className=''>
+          <div className='mb-6 col-span-2 sm:col-span-1'>
             <label className='block' htmlFor=''>
               Email Address:{' '}
             </label>
@@ -111,7 +111,7 @@ const Contact = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className=''>
+          <div className='mb-6 col-span-2 sm:col-span-1'>
             <label className='block' htmlFor=''>
               Phone Number:{' '}
             </label>
@@ -123,7 +123,7 @@ const Contact = () => {
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
           </div>
-          <div className=' col-span-2'>
+          <div className='mb-6 col-span-2'>
             <label className='block' htmlFor=''>
               Message:{' '}
             </label>

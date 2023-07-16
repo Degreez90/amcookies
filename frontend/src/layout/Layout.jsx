@@ -39,8 +39,8 @@ const Layout = () => {
         event.target !== menuButtonRef.current
       ) {
         console.log('we are here')
-        setIsOpen(false)
-        setIsChecked(false)
+        setIsOpen(!isOpen)
+        setIsChecked(!isChecked)
       }
     }
   }
@@ -92,9 +92,6 @@ const Layout = () => {
         <Hero
           onClickHandler={onClickHandler}
           isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          isChecked={isChecked}
-          setIsChecked={setIsChecked}
           menuButtonRef={menuButtonRef}
         />
       </div>
@@ -102,8 +99,6 @@ const Layout = () => {
         <Sidemenu
           isOpen={isOpen}
           onClickHandler={onClickHandler}
-          isChecked={isChecked}
-          setIsChecked={setIsChecked}
           sideMenuRef={sideMenuRef}
         />
       </div>

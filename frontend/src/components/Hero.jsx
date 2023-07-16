@@ -58,8 +58,8 @@ const Hero = ({
                     className=' z-50'
                     ref={menuButtonRef}
                     type='checkbox'
-                    onChange={() => onClickHandler()}
-                    checked={isChecked}
+                    onChange={onClickHandler}
+                    checked={isOpen}
                   />
 
                   {/* hamburger icon */}
