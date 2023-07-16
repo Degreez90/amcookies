@@ -2,7 +2,7 @@ import React from 'react'
 import hours from '../data/hours.json'
 const About = () => {
   return (
-    <div className='container'>
+    <div className='container px-4'>
       <div className='flex flex-col md:flex-row'>
         <div className='grow md:mr-10 lg:mr-0 mb-3'>
           <h2 className='mb-3 text-2xl font-bold'>Location</h2>

@@ -47,9 +47,9 @@ const Contact = () => {
   }
 
   return (
-    <div className='container p-1 w-full px-4'>
+    <div className='container w-full px-4'>
       <ToastContainer />
-      <div className='border-b-2 mb-8 border-gray-400 lg:mx-24'>
+      <div className='border-b mb-8 border-gray-400 lg:mx-24'>
         <p className='mb-8'>
           Welcome to our Contact Page! We are delighted to provide you with a
           convenient and straightforward way to get in touch with us. Whether
@@ -60,13 +60,13 @@ const Contact = () => {
       {responseMessage ? <div>{responseMessage}</div> : <div></div>}
       <form onSubmit={submitHandler}>
         <div className='md:px-0 lg:px-24 grid sm:grid-cols-2 md:gap-x-4 gap-x-4 grid-cols-2'>
-          <div className='border-b-2 mb-8 border-gray-400 col-span-2'>
+          <div className='border-b mb-8 border-gray-400 col-span-2'>
             <label className='block' htmlFor=''>
               Choose Subject:{' '}
             </label>
             <select
               name=''
-              className='p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 mb-8'
+              className='p-2 rounded-lg border border-gray-300  bg-gray-700 focus:ring-2 focus:ring-blue-500 mb-8'
               required
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
@@ -80,7 +80,7 @@ const Contact = () => {
               First Name:{' '}
             </label>
             <input
-              className='rounded-lg p-2 w-full'
+              className='rounded-lg p-2 w-full bg-gray-700'
               type='text'
               value={firstName}
               required
@@ -92,7 +92,7 @@ const Contact = () => {
               Last Name:{' '}
             </label>
             <input
-              className='rounded-lg p-2 w-full'
+              className='rounded-lg p-2 w-full bg-gray-700'
               type='text'
               value={lastName}
               required
@@ -104,7 +104,7 @@ const Contact = () => {
               Email Address:{' '}
             </label>
             <input
-              className='rounded-lg p-2 w-full'
+              className='rounded-lg p-2 w-full bg-gray-700'
               type='text'
               value={email}
               required
@@ -116,7 +116,7 @@ const Contact = () => {
               Phone Number:{' '}
             </label>
             <input
-              className='rounded-lg p-2 w-full'
+              className='rounded-lg p-2 w-full bg-gray-700'
               type='text'
               value={phoneNumber}
               required
@@ -128,7 +128,7 @@ const Contact = () => {
               Message:{' '}
             </label>
             <textarea
-              className='w-full h-[96px] rounded-lg'
+              className='w-full h-[96px] rounded-lg bg-gray-700'
               name=''
               id=''
               cols='30'
