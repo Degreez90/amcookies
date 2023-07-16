@@ -21,7 +21,9 @@ const OrderConfirm = () => {
       dispatch(resetCart())
       dispatch(clearLocalStorage())
       dispatch(resetSuccess())
-
+      toast.success('Your Order was placed', {
+        toastId: 'success1',
+      })
       const data = {
         orderDetails,
       }
@@ -30,8 +32,8 @@ const OrderConfirm = () => {
         const response = await axios.post(API_URL, data)
         if (response.data) {
           console.log(response.data)
-          toast.success('Your Order was placed', {
-            toastId: 'success1',
+          toast.success('Confirmation Email Sent', {
+            toastId: 'success2',
           })
         } else console.log('There was an error please try again')
         return response.data
