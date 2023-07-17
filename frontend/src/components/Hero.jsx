@@ -120,7 +120,7 @@ const Hero = ({
                 </label>
                 <div
                   tabIndex={0}
-                  className='mt-3 card card-compact dropdown-content w-52 bg-gray-800 shadow'
+                  className='mt-3 card top-14 card-compact dropdown-content w-52 bg-gray-800 shadow'
                 >
                   <div className='card-body'>
                     <span className='font-bold text-lg'>
