@@ -82,7 +82,11 @@ const Cart = () => {
             </div>
             <div className='flex flex-col justify-between md:col-span-1'>
               <div className='text-lg font-medium mb-4 md:mb-0'>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 10)}{' '}
+                Subtotal (
+                {cartItems.reduce(
+                  (acc, item) => acc + parseInt(item.qty, 10),
+                  0
+                )}{' '}
                 items):
                 <span className='ml-2'>
                   $
