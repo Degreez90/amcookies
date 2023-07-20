@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
@@ -20,6 +20,25 @@ const Hero = ({
   const count = cartItems
     ? cartItems.reduce((acc, item) => acc + parseInt(item.qty), 0)
     : 0
+
+  const [cartMenu, setCartMenu] = useState(false)
+  console.log(cartMenu)
+
+  const cartMenuRef = useRef()
+  const cartIconRef = useRef()
+
+  useEffect(() => {
+    const handleDropDown = (e) => {
+      if (!cartIconRef.current.contains(e.target)) {
+        setCartMenu(false)
+      }
+    }
+
+    document.addEventListener('click', handleDropDown)
+    return () => {
+      document.removeEventListener('click', handleDropDown)
+    }
+  })
 
   return (
     <div>
@@ -85,12 +104,14 @@ const Hero = ({
                   </svg>
                 </label>
               </div>
-              {/* <div className='mx-4 avatar placeholder'>
-                <div className='bg-neutral-focus text-neutral-content rounded-full w-12'>
-                  <span>PF</span>
-                </div>
-              </div> */}
-              <div className='dropdown dropdown-end ml-3 hidden sm:flex'>
+
+              <div
+                ref={cartIconRef}
+                onClick={() => {
+                  setCartMenu(!cartMenu)
+                }}
+                className='dropdown dropdown-end ml-3 hidden sm:flex'
+              >
                 <label tabIndex={0}>
                   <div className='btn btn-ghost btn-circle'>
                     <div className='indicator'>
@@ -119,6 +140,39 @@ const Hero = ({
                   </div>
                 </label>
                 <div
+                  onClick={(e) => {
+                    e.stopPropagation() // Prevent the click event from bubbling up
+                  }}
+                  ref={cartMenuRef}
+                  className={` ${
+                    cartMenu ? 'visible' : 'hidden'
+                  } absolute top-[70px] right-0 card-compact h-fit w-48 rounded-lg bg-gray-700`}
+                >
+                  <div className='card-body'>
+                    <span className='font-bold text-lg'>
+                      {count ? count.toString() : 0} Items
+                    </span>
+                    <span className='text-info'>
+                      Subtotal:{' $'}
+                      {cartItems
+                        .reduce((acc, item) => acc + item.qty * item.price, 0)
+                        .toFixed(2)}
+                    </span>
+                    <div className='card-actions'>
+                      <NavLink to={'/cart'}>
+                        <button
+                          onClick={() => setCartMenu(!cartMenu)}
+                          className='btn btn-primary btn-block'
+                        >
+                          View Cart
+                        </button>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+                {/*Old cart menu*/}
+                {/* <div
+                  id='dropdown'
                   tabIndex={0}
                   className='mt-3 card top-14 card-compact dropdown-content w-52 bg-gray-800 shadow'
                 >
@@ -140,7 +194,7 @@ const Hero = ({
                       </NavLink>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </nav>
           </div>
