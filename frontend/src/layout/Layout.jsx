@@ -95,7 +95,7 @@ const Layout = () => {
           menuButtonRef={menuButtonRef}
         />
       </div>
-      <div className='z-[9999]'>
+      <div className='z-[10]'>
         <Sidemenu
           isOpen={isOpen}
           onClickHandler={onClickHandler}

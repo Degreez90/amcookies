@@ -58,7 +58,7 @@ const Hero = ({
                 <Link to={'/'}>AM COOKIES</Link>
               </div>
               <div className='font-g1 text-xl hidden sm:flex'>
-                <ul className='flex space-x-3'>
+                <ul className='flex space-x-3 whitespace-nowrap'>
                   <li>
                     <NavLink to={'/'}>Cookies</NavLink>
                   </li>
@@ -170,31 +170,11 @@ const Hero = ({
                     </div>
                   </div>
                 </div>
-                {/*Old cart menu*/}
-                {/* <div
-                  id='dropdown'
-                  tabIndex={0}
-                  className='mt-3 card top-14 card-compact dropdown-content w-52 bg-gray-800 shadow'
-                >
-                  <div className='card-body'>
-                    <span className='font-bold text-lg'>
-                      {count ? count.toString() : 0} Items
-                    </span>
-                    <span className='text-info'>
-                      Subtotal:{' $'}
-                      {cartItems
-                        .reduce((acc, item) => acc + item.qty * item.price, 0)
-                        .toFixed(2)}
-                    </span>
-                    <div className='card-actions'>
-                      <NavLink to={'/cart'}>
-                        <button className='btn btn-primary btn-block'>
-                          View Cart
-                        </button>
-                      </NavLink>
-                    </div>
-                  </div>
-                </div> */}
+              </div>
+              <div className='ml-4 font-g1 text-xl hidden sm:flex'>
+                <ul className='flex space-x-3 whitespace-nowrap'>
+                  <li>Sign Up</li>
+                </ul>
               </div>
             </nav>
           </div>
