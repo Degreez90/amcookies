@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import Hero from '../components/Hero'
 import { ToastContainer } from 'react-toastify'
 import Sidemenu from '../components/menu/Sidemenu'
+import { Link, NavLink } from 'react-router-dom'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -86,7 +87,7 @@ const Layout = () => {
   }, [isOpen, isSmallScreen])
 
   return (
-    <div className='bg-white relative min-h-screen flex flex-col'>
+    <div className='bg-white relative min-h-screen flex flex-col '>
       <ToastContainer />
       <div className='z-10'>
         <Hero
@@ -96,6 +97,50 @@ const Layout = () => {
         />
       </div>
       <div className='z-[10]'>
+        {/* Modal for Sign up */}
+        <dialog id='my_modal_2' className='modal'>
+          <form method='dialog' className='modal-box max-w-[370px]'>
+            <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>
+              ✕
+            </button>
+            <div className='text-center font-g1 justify-items-center whitespace-nowrap mb-4'>
+              <h3 className='font-bold text-lg mb-4'>AM</h3>
+              <div className='flex mx-auto justify-center text-lg mb-4 w-8/12'>
+                <div className='text-center grow'>
+                  <NavLink
+                    to={'/'}
+                    className='hover:border-b-2 pb-1 active:outline-none'
+                  >
+                    Sign In
+                  </NavLink>
+                </div>
+                <div className='text-center grow'>
+                  <NavLink
+                    to='/'
+                    className='hover:border-b-2 pb-1'
+                    autoFocus={false}
+                    end
+                  >
+                    Sign Up
+                  </NavLink>
+                </div>
+              </div>
+              <div className='mx-auto text-left w-[75%]'>
+                <label htmlFor=''>Email:</label>
+                <div className='flex justify-center w-full mb-4 mt-1'>
+                  <input className='w-full' type='text' />
+                </div>
+                <label htmlFor=''>Password:</label>
+                <div className='flex w-full justify-center mb-4 mt-1'>
+                  <input className='w-full' type='text' />
+                </div>
+              </div>
+            </div>
+          </form>
+          <form method='dialog' className='modal-backdrop'>
+            <button>close</button>
+          </form>
+        </dialog>
         <Sidemenu
           isOpen={isOpen}
           onClickHandler={onClickHandler}
