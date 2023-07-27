@@ -86,6 +86,16 @@ const Layout = () => {
     }
   }, [isOpen, isSmallScreen])
 
+  const [isSignUp, setIsSignUp] = useState(true)
+
+  const handleSignUp = () => {
+    setIsSignUp(true)
+  }
+
+  const handleSignIn = () => {
+    setIsSignUp(false)
+  }
+
   return (
     <div className='bg-white relative min-h-screen flex flex-col '>
       <ToastContainer />
@@ -98,7 +108,77 @@ const Layout = () => {
       </div>
       <div className='z-[10]'>
         {/* Modal for Sign up */}
-        <dialog id='my_modal_2' className='modal'>
+        <input type='checkbox' id='my_modal_7' className='modal-toggle' />
+        <div className='modal'>
+          <div className='modal-box'>
+            <div className='modal-action'>
+              <label
+                htmlFor='my_modal_7'
+                className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
+              >
+                X
+              </label>
+            </div>
+            <div className='flex-col text-center font-g1 whitespace-nowrap mb-4'>
+              <h3 className='font-bold text-2xl mb-5'>AM</h3>
+              <div className='divider mb-5'>
+                {isSignUp ? 'Register' : 'Login'}
+              </div>
+              <div className='flex flex-col justify-center sm:flex-row sm:mx-auto sm:justify-center text-lg sm:w-8/12'>
+                <div className='text-center grow mb-3'>
+                  <button
+                    onClick={handleSignUp}
+                    to={'/'}
+                    className='border-b-2 border-transparent hover:border-b-2 hover:border-white pb-1 text-2xl'
+                  >
+                    Sign Up
+                  </button>
+                </div>
+                <div className='text-center grow mb-3'>
+                  <button
+                    onClick={handleSignIn}
+                    to={'/'}
+                    className='border-b-2 border-transparent hover:border-b-2 hover:border-white pb-1 text-2xl'
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </div>
+              {isSignUp ? (
+                <div className='mx-auto text-left w-[75%]'>
+                  <label htmlFor=''>Email:</label>
+                  <div className='flex justify-center w-full mb-4 mt-1'>
+                    <input className='w-full' type='text' />
+                  </div>
+                  <label htmlFor=''>Password:</label>
+                  <div className='flex w-full justify-center mb-4 mt-1'>
+                    <input className='w-full' type='text' />
+                  </div>
+                </div>
+              ) : (
+                <div className='mx-auto text-left w-[75%]'>
+                  <label htmlFor=''>Email:</label>
+                  <div className='flex justify-center w-full mb-4 mt-1'>
+                    <input className='w-full' type='text' />
+                  </div>
+                  <label htmlFor=''>Password:</label>
+                  <div className='flex w-full justify-center mb-4 mt-1'>
+                    <input className='w-full' type='text' />
+                  </div>
+                  <label htmlFor=''>Confirm Password:</label>
+                  <div className='flex w-full justify-center mb-4 mt-1'>
+                    <input className='w-full' type='text' />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <label className='modal-backdrop' htmlFor='my_modal_7'>
+            Close
+          </label>
+        </div>
+        {/* //* Old dialog keep for possible changes *?}
+        {/* <dialog id='my_modal_2' className='modal'>
           <form method='dialog' className='modal-box max-w-[370px]'>
             <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>
               ✕
@@ -140,7 +220,7 @@ const Layout = () => {
           <form method='dialog' className='modal-backdrop'>
             <button>close</button>
           </form>
-        </dialog>
+        </dialog> */}
         <Sidemenu
           isOpen={isOpen}
           onClickHandler={onClickHandler}

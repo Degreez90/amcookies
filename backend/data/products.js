@@ -18,11 +18,11 @@ const products = [
     numReviews: 0,
   },
   {
-    name: 'White Chocolate Chip',
-    image: '/images/whitechocolatechip.jpg',
+    name: 'Mix Chocolate Chip',
+    image: '/images/chocolatechip_wb.jpg',
     description:
-      'Indulge in the golden crunch of our buttery butterscotch cookie',
-    price: 2.99,
+      'Indulge in the delightful mix of classic chocolate chip and white chocolate chip cookies.',
+    price: 3.99,
     inStock: true,
     rating: 0,
     numReviews: 0,
@@ -40,7 +40,8 @@ const products = [
   {
     name: 'Sugar Cookie',
     image: '/images/sugarcookie.jpg',
-    description: 'A delicious cookie with cinemon sugar',
+    description:
+      'Enjoy the classic simplicity of our sweet and buttery sugar cookie.',
     price: 2.99,
     inStock: true,
     rating: 0,
@@ -57,10 +58,10 @@ const products = [
     numReviews: 0,
   },
   {
-    name: 'Snicker Doodle',
+    name: 'Snickerdoodle',
     image: '/images/snickerdoodle.jpg',
     description:
-      'Indulge in the golden crunch of our buttery butterscotch cookie',
+      'Enjoy the sweet and cinnamon flavor of our snickerdoodle cookie.',
     price: 2.99,
     inStock: true,
     rating: 0,
@@ -70,7 +71,7 @@ const products = [
     name: 'Double Chocolate Chip',
     image: '/images/doublechoc.jpg',
     description:
-      'Enjoy in the golden crunch of our double chocolate chip cookie',
+      'Indulge in the rich taste of our double chocolate chip cookie.',
     price: 2.99,
     inStock: true,
     rating: 0,

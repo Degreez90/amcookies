@@ -1,8 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const userSchema = mongoose.Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -24,8 +28,8 @@ const userSchema = mongoose.Schema(
   {
     timestamps: true,
   }
-);
+)
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
 
-export default User;
+export default User

@@ -173,7 +173,9 @@ const Hero = ({
               </div>
               <div className='ml-4 font-g1 text-xl hidden sm:flex'>
                 <ul className='flex space-x-3 whitespace-nowrap'>
-                  <li onClick={() => window.my_modal_2.showModal()}>Sign Up</li>
+                  <li>
+                    <label htmlFor='my_modal_7'>Sign Up</label>
+                  </li>
                 </ul>
               </div>
             </nav>
