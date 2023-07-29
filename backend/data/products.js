@@ -31,7 +31,7 @@ const products = [
   },
   {
     name: 'Oatmeal Raisin',
-    image: './images/oatmealraisin.jpg',
+    image: '/images/oatmealraisin.jpg',
     description:
       'Indulge in the heartwarming goodness of our Oatmeal Raisin cookie. This delectable treat is a delightful fusion of wholesome oats and plump, juicy raisins, creating a harmonious blend of flavors and textures. Each bite delivers a soft, chewy center with a hint of cinnamon, complemented by the natural sweetness of the raisins. Whether you savor it with a glass of milk or enjoy it as a comforting snack on its own, our Oatmeal Raisin cookie is a nostalgic classic that never disappoints.',
     price: 2.5,
