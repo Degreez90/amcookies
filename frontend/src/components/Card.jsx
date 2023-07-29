@@ -14,8 +14,8 @@ const Card = ({ products }) => {
           />
         </figure>
       </Link>
-      <div className='card-body pt-1 pb2 text-center'>
-        <h2 className='card-title text-white font-bold justify-center items-center h-16'>
+      <div className='card-body pt-1 gap-3 text-center'>
+        <h2 className='card-title pb-2 text-white font-bold justify-center items-center h-16'>
           {products.name}
         </h2>
         {/* <p className='text-white'>{products.description}</p> */}
