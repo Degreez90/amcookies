@@ -20,16 +20,15 @@ const Product = ({ product }) => {
     dispatch(resetCart())
   }
 
-  // const addToCartHandler = () => {
-  //   navigate(`/cart/${id}?qty=${qty}`)
-  // }
-
   return (
-    <div className='card w-fit mx-auto lg:card-side customCard shadow-xl mt-10'>
-      <figure>
-        <img className=' h-96 w-96' src={product.image} />
+    <div className='card w-4/5 md:w-fit md:max-h-[fit] mx-auto md:card-side customCard shadow-xl mt-10'>
+      <figure className='max-h-[500px]'>
+        <img
+          className='md:w-[400px] md:h-[480px] w-full h-96'
+          src={product.image}
+        />
       </figure>
-      <div className='card-body'>
+      <div className='card-body md:max-w-lg lg:max-w-2xl xl:max-w-3xl'>
         <h2 className='card-title text-white'>{product.name}</h2>
         <p className='grow-0 text-white'>{product.description}</p>
         <div>

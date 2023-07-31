@@ -77,6 +77,7 @@ const Modal = () => {
             <div className='divider mb-5'>
               {isSignUp ? 'Register' : 'Login'}
             </div>
+
             <div className='flex flex-col justify-center sm:flex-row sm:mx-auto sm:justify-center text-lg sm:w-8/12'>
               <div className='text-center grow mb-3'>
                 <button
@@ -99,6 +100,8 @@ const Modal = () => {
             </div>
             {isSignUp ? (
               <div className='mx-auto text-left w-[75%]'>
+                {/* //* Sign up form   */}
+
                 <form onSubmit={onSubmit2}>
                   <label htmlFor=''>Email:</label>
                   <div className='flex justify-center w-full mb-4 mt-1'>
@@ -141,6 +144,8 @@ const Modal = () => {
               </div>
             ) : (
               <div className='mx-auto text-left w-[75%]'>
+                {/* //* Sign in form */}
+
                 <form onSubmit={onSubmit}>
                   <label htmlFor=''>Email:</label>
                   <div className='flex justify-center w-full mb-4 mt-1'>
