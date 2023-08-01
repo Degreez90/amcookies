@@ -1,6 +1,6 @@
-const asyncHandler = require('express-async-handler')
-
-const User = require('../models/userModel')
+import asyncHandler from 'express-async-handler'
+import User from '../models/userModel.js'
+import generateToken from '../utils/generateToken.js'
 
 const registerUser = asyncHandler(async (req, res) => {
   const { firstName, lastName, email, password } = req.body
@@ -28,14 +28,20 @@ const registerUser = asyncHandler(async (req, res) => {
   })
 
   if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user._id),
-    })
-  } else {
-    res.status(400)
-    throw new error('Invalid user data')
+    generateToken(res, user._id)
+
+    if (user) {
+      res.status(201).json({
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      })
+    } else {
+      res.status(400)
+      throw new error('Invalid user data')
+    }
   }
 })
+
+export { registerUser }
