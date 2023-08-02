@@ -3,6 +3,7 @@ import User from '../models/userModel.js'
 import generateToken from '../utils/generateToken.js'
 
 const registerUser = asyncHandler(async (req, res) => {
+  console.log(req.body)
   const { firstName, lastName, email, password } = req.body
 
   // Validation

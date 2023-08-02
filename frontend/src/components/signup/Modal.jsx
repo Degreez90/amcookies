@@ -3,22 +3,36 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../features/auth/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Modal = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [isSignUp, setIsSignUp] = useState(true)
 
   const [formData, setFormData] = useState({
     emailSU: '',
     emailSI: '',
+    firstName: '',
+    lastName: '',
     passwordSU: '',
     passwordSU2: '',
     passwordSI: '',
   })
 
-  const { emailSU, emailSI, password, passwordSU, passwordSU2, passwordSI } =
-    formData
+  const { user } = useSelector((state) => state.auth)
+
+  const {
+    emailSU,
+    emailSI,
+    firstName,
+    lastName,
+    password,
+    passwordSU,
+    passwordSU2,
+    passwordSI,
+  } = formData
 
   const handleSignUp = () => {
     setIsSignUp(true)
@@ -46,7 +60,7 @@ const Modal = () => {
     dispatch(register(userData))
   }
 
-  const onSubmit2 = (e) => {
+  const onSubmit2 = async (e) => {
     e.preventDefault()
 
     if (passwordSU !== passwordSU2) {
@@ -54,10 +68,14 @@ const Modal = () => {
       console.log('run')
     } else {
       const userData = {
-        emailSI,
-        password,
+        firstName,
+        lastName,
+        email: emailSU,
+        password: passwordSU,
       }
-      dispatch(register)
+      await dispatch(register(userData))
+      toast(`Welcome ${user}`)
+      navigate('/')
     }
   }
 
@@ -109,9 +127,31 @@ const Modal = () => {
                   <label htmlFor=''>Email:</label>
                   <div className='flex justify-center w-full mb-4 mt-1'>
                     <input
-                      type='email'
+                      type='text'
                       name='emailSU'
                       value={emailSU}
+                      onChange={onChange}
+                      className='input input-bordered w-full max-w-xs'
+                      required
+                    />
+                  </div>
+                  <label htmlFor=''>First Name:</label>
+                  <div className='flex justify-center w-full mb-4 mt-1'>
+                    <input
+                      type='text'
+                      name='firstName'
+                      value={firstName}
+                      onChange={onChange}
+                      className='input input-bordered w-full max-w-xs'
+                      required
+                    />
+                  </div>
+                  <label htmlFor=''>Last Name:</label>
+                  <div className='flex justify-center w-full mb-4 mt-1'>
+                    <input
+                      type='text'
+                      name='lastName'
+                      value={lastName}
                       onChange={onChange}
                       className='input input-bordered w-full max-w-xs'
                       required
