@@ -1,9 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../features/auth/authSlice'
 
 const Modal = () => {
+  const dispatch = useDispatch()
+
   const [isSignUp, setIsSignUp] = useState(true)
 
   const [formData, setFormData] = useState({

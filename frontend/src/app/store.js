@@ -7,7 +7,7 @@ import orderReducer from '../features/orders/orderSlice'
 
 export const store = configureStore({
   reducer: {
-    user: authReducer,
+    auth: authReducer,
     products: productsReducer,
     cart: cartReducer,
     order: orderReducer,

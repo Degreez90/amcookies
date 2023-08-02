@@ -15,6 +15,23 @@ const Hero = ({
 }) => {
   const cart = useSelector((state) => state.cart)
 
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
+
+  // useEffect(() => {
+  //   if (isError) {
+  //     toast.error(message)
+  //   }
+
+  //   // Redirect when logged in
+  //   if (isSuccess || user) {
+  //     navigate('/')
+  //   }
+
+  //   dispatch(reset())
+  // }, [isError, isSuccess, user, message, navigate, dispatch])
+
   const { cartItems } = cart
 
   const count = cartItems
@@ -74,7 +91,7 @@ const Hero = ({
                 <label className='btn btn-circle swap swap-rotate'>
                   {/* this hidden checkbox controls the state */}
                   <input
-                    className=' z-50'
+                    className='z-50'
                     ref={menuButtonRef}
                     type='checkbox'
                     onChange={onClickHandler}
@@ -172,11 +189,19 @@ const Hero = ({
                 </div>
               </div>
               <div className='ml-4 font-g1 text-xl hidden sm:flex'>
-                <ul className='flex space-x-3 whitespace-nowrap'>
-                  <li>
-                    <label htmlFor='my_modal_7'>Sign Up</label>
-                  </li>
-                </ul>
+                {user ? (
+                  <div className='avatar online placeholder'>
+                    <div className='bg-neutral-focus text-neutral-content rounded-full w-16'>
+                      <span className='text-xl'>U</span>
+                    </div>
+                  </div>
+                ) : (
+                  <ul className='flex space-x-3 whitespace-nowrap'>
+                    <li>
+                      <label htmlFor='my_modal_7'>Sign Up</label>
+                    </li>
+                  </ul>
+                )}
               </div>
             </nav>
           </div>
