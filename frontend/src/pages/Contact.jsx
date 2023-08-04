@@ -76,7 +76,20 @@ const Contact = () => {
             </select>
           </div>
           <div className='mb-6 col-span-2 sm:col-span-1'>
-            <label className='block' htmlFor=''>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label'>
+                <span className='label-text'>What is your first name?</span>
+              </label>
+              <input
+                type='text'
+                value={firstName}
+                required
+                placeholder='First Name'
+                className='input input-bordered w-full max-w-xs'
+              />
+            </div>
+            {/* old input */}
+            {/* <label className='block' htmlFor=''>
               First Name:{' '}
             </label>
             <input
@@ -85,9 +98,22 @@ const Contact = () => {
               value={firstName}
               required
               onChange={(e) => setFirstName(e.target.value)}
-            />
+            /> */}
           </div>
           <div className='mb-6 col-span-2 sm:col-span-1'>
+            <div className='form-control w-full max-w-xs'>
+              <label className='label'>
+                <span className='label-text'>What is your last name?</span>
+              </label>
+              <input
+                type='text'
+                value={lastName}
+                required
+                placeholder='First Name'
+                className='input input-bordered w-full max-w-xs'
+              />
+            </div>
+
             <label className='block' htmlFor=''>
               Last Name:{' '}
             </label>
