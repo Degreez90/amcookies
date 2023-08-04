@@ -8,7 +8,7 @@ import {
 const router = express.Router()
 
 router.route('/').post(registerUser)
-router.route('/auth', authUser)
-router.route('/logout', logoutUser)
+router.post('/auth', authUser)
+router.post('/logout', logoutUser)
 
 export default router

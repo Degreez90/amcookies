@@ -1,15 +1,19 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { register } from '../../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 
-const Modal = () => {
+const Modal = ({ isModalOpen, setModalOpen }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const modalBoxRef = useRef()
+  const modalRef = useRef()
+  const modalForm = useRef()
 
   const [isSignUp, setIsSignUp] = useState(true)
+  console.log(isSignUp)
 
   const [formData, setFormData] = useState({
     emailSU: '',
@@ -21,7 +25,7 @@ const Modal = () => {
     passwordSI: '',
   })
 
-  const { user } = useSelector((state) => state.auth)
+  const { user, isSuccess, isError } = useSelector((state) => state.auth)
 
   const {
     emailSU,
@@ -33,6 +37,13 @@ const Modal = () => {
     passwordSU2,
     passwordSI,
   } = formData
+
+  const handleModal = (e) => {
+    //closing modal
+    if (modalRef.current.contains(e.target)) {
+      setModalOpen(false)
+    }
+  }
 
   const handleSignUp = () => {
     setIsSignUp(true)
@@ -73,19 +84,46 @@ const Modal = () => {
         email: emailSU,
         password: passwordSU,
       }
-      await dispatch(register(userData))
-      toast(`Welcome ${user}`)
-      navigate('/')
+
+      dispatch(register(userData))
     }
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(isSuccess)
+      toast(`Welcome ${user.firstName}`)
+      setModalOpen(false)
+      navigate('/')
+    }
+  }, [isSuccess, user])
+
+  useEffect(() => {
+    if (isModalOpen) {
+      console.log(isModalOpen)
+      document.addEventListener('click', handleModal)
+    }
+
+    return () => {
+      document.removeEventListener('click', handleModal)
+    }
+  }, [])
 
   return (
     <>
       {/* Modal for Sign up */}
-      <input type='checkbox' id='my_modal_7' className='modal-toggle' />
-      <div className='modal'>
-        <div className='modal-box'>
-          <div className='modal-action'>
+      <div
+        ref={modalRef}
+        className={`modal ${isModalOpen ? 'modal-open' : ''}`}
+      >
+        <div
+          ref={modalBoxRef}
+          onClick={(e) => {
+            e.stopPropagation() // Prevent the click event from bubbling up
+          }}
+          className='modal-box'
+        >
+          <div onClick={() => setModalOpen(false)} className='modal-action'>
             <label
               htmlFor='my_modal_7'
               className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'
@@ -104,7 +142,11 @@ const Modal = () => {
                 <button
                   onClick={handleSignUp}
                   to={'/'}
-                  className='border-b-2 border-transparent hover:border-b-2 hover:border-primary pb-1 text-2xl'
+                  className={` ${
+                    isSignUp
+                      ? 'border-b-2 border-primary'
+                      : 'border-b-2 border-transparent'
+                  } pb-1 text-2xl`}
                 >
                   Sign Up
                 </button>
@@ -113,7 +155,11 @@ const Modal = () => {
                 <button
                   onClick={handleSignIn}
                   to={'/'}
-                  className='border-b-2 border-transparent hover:border-b-2 hover:border-primary pb-1 text-2xl'
+                  className={` ${
+                    !isSignUp
+                      ? 'border-b-2 border-primary'
+                      : 'border-b-2 border-transparent'
+                  } pb-1 text-2xl`}
                 >
                   Sign In
                 </button>
@@ -207,7 +253,7 @@ const Modal = () => {
                       type='password'
                     />
                   </div>
-                  <div className='flex justify-center'>
+                  <div className='flex justify-center '>
                     <button className='btn btn-wide'>Submit</button>
                   </div>
                 </form>

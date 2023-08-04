@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout, reset } from '../features/auth/authSlice'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Sidemenu from './menu/Sidemenu'
 
 const Hero = ({
   toggleMenu,
   onClickHandler,
+  setModalOpen,
   setIsChecked,
   isChecked,
   setIsOpen,
@@ -19,19 +20,6 @@ const Hero = ({
     (state) => state.auth
   )
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     toast.error(message)
-  //   }
-
-  //   // Redirect when logged in
-  //   if (isSuccess || user) {
-  //     navigate('/')
-  //   }
-
-  //   dispatch(reset())
-  // }, [isError, isSuccess, user, message, navigate, dispatch])
-
   const { cartItems } = cart
 
   const count = cartItems
@@ -39,10 +27,18 @@ const Hero = ({
     : 0
 
   const [cartMenu, setCartMenu] = useState(false)
-  console.log(cartMenu)
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const cartMenuRef = useRef()
   const cartIconRef = useRef()
+
+  const handleLogout = () => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate('/')
+  }
 
   useEffect(() => {
     const handleDropDown = (e) => {
@@ -190,15 +186,28 @@ const Hero = ({
               </div>
               <div className='ml-4 font-g1 text-xl hidden sm:flex'>
                 {user ? (
-                  <div className='avatar online placeholder'>
-                    <div className='bg-neutral-focus text-neutral-content rounded-full w-16'>
-                      <span className='text-xl'>U</span>
+                  <div className='flex justify-center items-center space-x-3'>
+                    <div className='avatar online placeholder'>
+                      <div className='bg-neutral-focus text-neutral-content rounded-full w-16'>
+                        <span className='text-xl'>U</span>
+                      </div>
+                    </div>
+                    <div
+                      className='hover:cursor-pointer'
+                      onClick={() => handleLogout()}
+                    >
+                      Logout
                     </div>
                   </div>
                 ) : (
                   <ul className='flex space-x-3 whitespace-nowrap'>
                     <li>
-                      <label htmlFor='my_modal_7'>Sign Up</label>
+                      <label
+                        onClick={() => setModalOpen(true)}
+                        htmlFor='my_modal_7'
+                      >
+                        Sign Up
+                      </label>
                     </li>
                   </ul>
                 )}

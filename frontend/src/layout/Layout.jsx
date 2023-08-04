@@ -10,6 +10,7 @@ import Modal from '../components/signup/Modal'
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
+  const [isModalOpen, setModalOpen] = useState(false)
   const sideMenuRef = useRef(null)
   const menuButtonRef = useRef(null)
 
@@ -94,6 +95,7 @@ const Layout = () => {
       </div>
       <div className='z-10'>
         <Hero
+          setModalOpen={setModalOpen}
           onClickHandler={onClickHandler}
           isOpen={isOpen}
           menuButtonRef={menuButtonRef}
@@ -107,7 +109,7 @@ const Layout = () => {
         />
       </div>
       <div>
-        <Modal />
+        <Modal isModalOpen={isModalOpen} setModalOpen={setModalOpen} />
       </div>
       <main className='container mx-auto mt-4'>
         <Outlet />
