@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState, useRef } from 'react'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import { register } from '../../features/auth/authSlice'
+import { login, register } from '../../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 
 const Modal = ({ isModalOpen, setModalOpen }) => {
@@ -13,7 +13,6 @@ const Modal = ({ isModalOpen, setModalOpen }) => {
   const modalForm = useRef()
 
   const [isSignUp, setIsSignUp] = useState(true)
-  console.log(isSignUp)
 
   const [formData, setFormData] = useState({
     emailSU: '',
@@ -39,8 +38,9 @@ const Modal = ({ isModalOpen, setModalOpen }) => {
   } = formData
 
   const handleModal = (e) => {
-    //closing modal
+    //desc  Close modal from outside click
     if (modalRef.current.contains(e.target)) {
+      console.log('close')
       setModalOpen(false)
     }
   }
@@ -60,17 +60,20 @@ const Modal = ({ isModalOpen, setModalOpen }) => {
     }))
   }
 
+  //desc  Sign in form handler
   const onSubmit = (e) => {
     e.preventDefault()
 
     const userData = {
-      emailSU,
-      passwordSU,
+      emailSI,
+      passwordSI,
     }
+    console.log(userData)
 
-    dispatch(register(userData))
+    dispatch(login(userData))
   }
 
+  //desc Signup form handler
   const onSubmit2 = async (e) => {
     e.preventDefault()
 
@@ -100,22 +103,18 @@ const Modal = ({ isModalOpen, setModalOpen }) => {
 
   useEffect(() => {
     if (isModalOpen) {
-      console.log(isModalOpen)
       document.addEventListener('click', handleModal)
     }
 
     return () => {
       document.removeEventListener('click', handleModal)
     }
-  }, [])
+  }, [isModalOpen])
 
   return (
     <>
       {/* Modal for Sign up */}
-      <div
-        ref={modalRef}
-        className={`modal ${isModalOpen ? 'modal-open' : ''}`}
-      >
+      <div className={`modal ${isModalOpen ? 'modal-open' : ''}`}>
         <div
           ref={modalBoxRef}
           onClick={(e) => {
@@ -241,6 +240,9 @@ const Modal = ({ isModalOpen, setModalOpen }) => {
                     <input
                       className='input input-bordered w-full max-w-xs'
                       type='text'
+                      name='emailSI'
+                      value={emailSI}
+                      onChange={onChange}
                     />
                   </div>
                   <label htmlFor=''>Password:</label>
@@ -261,7 +263,7 @@ const Modal = ({ isModalOpen, setModalOpen }) => {
             )}
           </div>
         </div>
-        <label className='modal-backdrop' htmlFor='my_modal_7'>
+        <label ref={modalRef} className='modal-backdrop' htmlFor='my_modal_7'>
           Close
         </label>
       </div>
