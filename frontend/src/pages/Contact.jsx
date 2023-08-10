@@ -47,9 +47,9 @@ const Contact = () => {
   }
 
   return (
-    <div className='container w-full px-4'>
+    <div className='container mx-auto w-4/5 px-4'>
       <ToastContainer />
-      <div className='border-b mb-8 border-gray-400 lg:mx-24'>
+      <div className='border-b mb-6 border-gray-400 lg:mx-24'>
         <p className='mb-8'>
           Welcome to our Contact Page! We are delighted to provide you with a
           convenient and straightforward way to get in touch with us. Whether
@@ -59,14 +59,14 @@ const Contact = () => {
       </div>
       {responseMessage ? <div>{responseMessage}</div> : <div></div>}
       <form onSubmit={submitHandler}>
-        <div className='md:px-0 lg:px-24 grid sm:grid-cols-2 md:gap-x-4 gap-x-4 grid-cols-2'>
+        <div className='md:px-0 lg:px-24 grid sm:grid-cols-2 md:gap-x-6 gap-x-6 grid-cols-2'>
           <div className='border-b mb-8 border-gray-400 col-span-2'>
-            <label className='block' htmlFor=''>
-              Choose Subject:{' '}
+            <label className='label'>
+              <span className='label-text'>Choose subject:</span>
             </label>
             <select
-              name=''
-              className='p-2 rounded-lg border border-gray-300  bg-gray-700 focus:ring-2 focus:ring-blue-500 mb-8'
+              className='select select-bordered w-full max-w-xs mb-8'
+              name='subject'
               required
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
@@ -76,7 +76,7 @@ const Contact = () => {
             </select>
           </div>
           <div className='mb-6 col-span-2 sm:col-span-1'>
-            <div className='form-control w-full max-w-xs'>
+            <div className='form-control w-full'>
               <label className='label'>
                 <span className='label-text'>What is your first name?</span>
               </label>
@@ -85,23 +85,13 @@ const Contact = () => {
                 value={firstName}
                 required
                 placeholder='First Name'
-                className='input input-bordered w-full max-w-xs'
+                className='input input-bordered w-full'
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
-            {/* old input */}
-            {/* <label className='block' htmlFor=''>
-              First Name:{' '}
-            </label>
-            <input
-              className='rounded-lg p-2 w-full bg-gray-700'
-              type='text'
-              value={firstName}
-              required
-              onChange={(e) => setFirstName(e.target.value)}
-            /> */}
           </div>
           <div className='mb-6 col-span-2 sm:col-span-1'>
-            <div className='form-control w-full max-w-xs'>
+            <div className='form-control w-full'>
               <label className='label'>
                 <span className='label-text'>What is your last name?</span>
               </label>
@@ -109,56 +99,49 @@ const Contact = () => {
                 type='text'
                 value={lastName}
                 required
-                placeholder='First Name'
-                className='input input-bordered w-full max-w-xs'
+                placeholder='Last Name'
+                className='input input-bordered w-full'
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
-
-            <label className='block' htmlFor=''>
-              Last Name:{' '}
-            </label>
-            <input
-              className='rounded-lg p-2 w-full bg-gray-700'
-              type='text'
-              value={lastName}
-              required
-              onChange={(e) => setLastName(e.target.value)}
-            />
           </div>
           <div className='mb-6 col-span-2 sm:col-span-1'>
-            <label className='block' htmlFor=''>
-              Email Address:{' '}
-            </label>
-            <input
-              className='rounded-lg p-2 w-full bg-gray-700'
-              type='text'
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className='form-control w-full'>
+              <label className='label'>
+                <span className='label-text'>What is your Email?</span>
+              </label>
+              <input
+                type='text'
+                value={email}
+                required
+                placeholder='Last Name'
+                className='input input-bordered w-full'
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
           </div>
           <div className='mb-6 col-span-2 sm:col-span-1'>
-            <label className='block' htmlFor=''>
-              Phone Number:{' '}
-            </label>
-            <input
-              className='rounded-lg p-2 w-full bg-gray-700'
-              type='text'
-              value={phoneNumber}
-              required
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
+            <div className='form-control w-full'>
+              <label className='label'>
+                <span className='label-text'>What is your Phone Number?</span>
+              </label>
+              <input
+                type='text'
+                value={phoneNumber}
+                required
+                placeholder='Last Name'
+                className='input input-bordered w-full'
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </div>
           </div>
           <div className='mb-6 col-span-2'>
-            <label className='block' htmlFor=''>
-              Message:{' '}
+            <label className='label'>
+              <span className='label-text'>What is your Message?</span>
             </label>
             <textarea
-              className='w-full h-[96px] rounded-lg bg-gray-700'
-              name=''
-              id=''
-              cols='30'
-              rows='10'
+              placeholder='Message'
+              className='textarea textarea-bordered textarea-lg w-full '
               value={message}
               required
               onChange={(e) => setMessage(e.target.value)}
