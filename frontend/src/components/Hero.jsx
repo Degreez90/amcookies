@@ -22,7 +22,6 @@ const Hero = ({
     : 0
 
   const [cartMenu, setCartMenu] = useState(false)
-  console.log(cartMenu)
 
   const cartMenuRef = useRef()
   const cartIconRef = useRef()
