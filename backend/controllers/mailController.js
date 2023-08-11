@@ -27,6 +27,7 @@ const sendMessage = asyncHandler(async (req, res) => {
     \n\n${message}`,
   }
 
+  console.log(messageData)
   client.messages
     .create(DOMAIN, messageData)
     .then((result) => {
@@ -74,8 +75,6 @@ const mailOrderConfirmation = asyncHandler(async (req, res) => {
     \nCountry: ${shippingAddress.country}
     \nitems: ${itemsText}`,
   }
-
-  console.log(messageData)
 
   client.messages
     .create(DOMAIN, messageData)
