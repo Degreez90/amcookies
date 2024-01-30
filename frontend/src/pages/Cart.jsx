@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { removeFromCart } from '../features/cart/cartSlice'
+import { cartAddItem, removeFromCart } from '../features/cart/cartSlice'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
@@ -11,6 +12,12 @@ const Cart = () => {
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart({ id: id }))
+  }
+
+  const [qty, setQty] = useState(null)
+
+  const addToCartHandler = () => {
+    dispatch(cartAddItem({ item: cartItems.id, qty }))
   }
 
   return (
@@ -22,12 +29,12 @@ const Cart = () => {
         {cartItems.length === 0 ? (
           <div>Your cart is empty</div>
         ) : (
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-10 md:grid-cols-3'>
             <div className='col-span-2'>
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className='flex flex-col md:flex-row border-b py-3'
+                  className='flex flex-col items-center md:flex-row border-b border-gray-400 py-3'
                 >
                   <div className='w-full md:w-1/5 mr-4 md:mr-0 mb-2 md:mb-0'>
                     <img
@@ -36,9 +43,10 @@ const Cart = () => {
                       className='w-full h-auto md:max-h-24 md:object-contain'
                     />
                   </div>
-                  <div className='flex-grow md:w-2/5'>
-                    <h2 className='text-lg font-medium'>{item.name}</h2>
-                    <p className='text-gray-500'>{item.description}</p>
+                  <div className='flex-grow md:w-2/5m items-center justify-center'>
+                    <h2 className='flex justify-center text-lg font-medium'>
+                      {item.name}
+                    </h2>
                   </div>
                   <div className='w-full md:w-1/5 flex items-center justify-center'>
                     <span className='text-lg font-medium'>${item.price}</span>
@@ -46,7 +54,14 @@ const Cart = () => {
                   <div className='w-full md:w-1/5 flex items-center justify-center'>
                     <select
                       value={item.qty}
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={(e) =>
+                        dispatch(
+                          cartAddItem({
+                            item: item.id,
+                            qty: Number(e.target.value),
+                          })
+                        )
+                      }
                       className='rounded-md border-gray-400'
                     >
                       {Array.from({ length: 12 }, (_, i) => (
@@ -67,7 +82,11 @@ const Cart = () => {
             </div>
             <div className='flex flex-col justify-between md:col-span-1'>
               <div className='text-lg font-medium mb-4 md:mb-0'>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}{' '}
+                Subtotal (
+                {cartItems.reduce(
+                  (acc, item) => acc + parseInt(item.qty, 10),
+                  0
+                )}{' '}
                 items):
                 <span className='ml-2'>
                   $

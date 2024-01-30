@@ -67,30 +67,19 @@ export const removeFromCart = createAsyncThunk(
   }
 )
 
-// export const saveShippingAddress = createAsyncThunk(
-//   'cart/saveShipping',
-//   async (data, thunkAPI) => {
-//     try {
-//       console.log(data)
-//       return data
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
-
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    resetCart: (state) => initialState,
+    clearLocalStorage: (state, action) => {
+      const removeFromLocalStorage = (keys) => {
+        keys.forEach((key) => localStorage.removeItem(key))
+      }
+      const keystoRemove = ['paymentMethod', 'shippingAddress', 'cartItems']
+
+      removeFromLocalStorage(keystoRemove)
+    },
     savePaymentMethod: (state, action) => {
       const data = action.payload
       state.payment = data
@@ -133,7 +122,7 @@ export const cartSlice = createSlice({
         const existItemQty = existItem ? existItem.qty : 0
 
         if (existItem) {
-          item.qty = Number(existItemQty) + Number(item.qty)
+          item.qty = Number(item.qty) ? Number(item.qty) : Number(existItemQty)
           state.cartItems = state.cartItems.map((x) =>
             x.id === existItem.id ? item : x
           )
@@ -177,49 +166,13 @@ export const cartSlice = createSlice({
           })
         )
       })
-    // .addCase(saveShippingAddress.pending, (state) => {
-    //   state.isLoading = true
-    // })
-    // .addCase(saveShippingAddress.fulfilled, (state, action) => {
-    //   state.isLoading = true
-    //   state.isError = false
-    //   state.shipping = action.payload
-
-    //   localStorage.setItem(
-    //     'shippingAddress',
-    //     JSON.stringify({
-    //       data: state.shipping,
-    //       expires: Date.now() + 10800000,
-    //     })
-    //   )
-    // })
-    // .addCase(saveShippingAddress.rejected, (state, action) => {
-    //   state.isLoading = false
-    //   state.isError = true
-    //   state.message = action.payload
-    // })
-    // .addCase(savePaymentMethod.pending, (state, action) => {
-    //   state.isLoading = true
-    // })
-    // .addCase(savePaymentMethod.fulfilled, (state, action) => {
-    //   state.isLoading = false
-    //   state.isError = false
-
-    //   const data = action.payload
-
-    //   state.payment = data
-
-    //   localStorage.setItem(
-    //     'paymentMethod',
-    //     JSON.stringify({
-    //       data: data,
-    //       expires: Date.now() + 10800000,
-    //     })
-    //   )
-    // })
   },
 })
 
-export const { reset, savePaymentMethod, saveShippingAddress } =
-  cartSlice.actions
+export const {
+  resetCart,
+  savePaymentMethod,
+  saveShippingAddress,
+  clearLocalStorage,
+} = cartSlice.actions
 export default cartSlice.reducer
