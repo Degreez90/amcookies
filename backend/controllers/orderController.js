@@ -5,9 +5,12 @@ import Order from '../models/orderModel.js'
 // @route   POST /api/orders
 // @access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
+  console.log(req.body)
   const {
+    nonRegUser,
     orderItems,
     shippingAddress,
+    paymentResults,
     paymentMethod,
     itemsPrice,
     taxPrice,
@@ -21,11 +24,14 @@ const addOrderItems = asyncHandler(async (req, res) => {
     return
   } else {
     const order = new Order({
+      nonRegUser,
       orderItems,
-      user: req.user._id,
+      user: req.user ? req.user._id : null,
       shippingAddress,
+      paymentResults,
       paymentMethod,
       itemsPrice,
+      ispaid: true,
       taxPrice,
       shippingPrice,
       totalPrice,

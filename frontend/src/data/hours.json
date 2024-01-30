@@ -1,0 +1,30 @@
+[
+  {
+    "day": "Monday",
+    "hours": "8:00AM - 10:00PM"
+  },
+  {
+    "day": "Tueday",
+    "hours": "8:00AM - 10:00PM"
+  },
+  {
+    "day": "Wedsday",
+    "hours": "8:00AM - 10:00PM"
+  },
+  {
+    "day": "Thursday",
+    "hours": "8:00AM - 10:00PM"
+  },
+  {
+    "day": "Friday",
+    "hours": "8:00AM - 10:00PM"
+  },
+  {
+    "day": "Saturday",
+    "hours": "10:00AM - 10:00PM"
+  },
+  {
+    "day": "Sunday",
+    "hours": "Closed"
+  }
+]
