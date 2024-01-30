@@ -18,7 +18,16 @@ const orderSchema = mongoose.Schema(
         type: String,
       },
       phoneNumber: {
-        type: Number,
+        type: String,
+        validate: {
+          validator: function (value) {
+            // Define your regex pattern
+            const regex = /^\(\d{3}\)-\d{3}-\d{4}$/
+            return regex.test(value)
+          },
+          message:
+            'Invalid value for myField. Only alphanumeric characters are allowed.',
+        },
       },
     },
     orderItems: [
@@ -27,7 +36,7 @@ const orderSchema = mongoose.Schema(
         qty: { type: Number, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
-        product: {
+        id: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: 'Product',
@@ -37,6 +46,7 @@ const orderSchema = mongoose.Schema(
     shippingAddress: {
       address: { type: String, required: true },
       city: { type: String, required: true },
+      state: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: true },
     },

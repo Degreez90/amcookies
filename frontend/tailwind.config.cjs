@@ -2,7 +2,15 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateRows: {
+        // Simple 8 row grid
+        7: 'repeat(7, minmax(0, 1fr))',
+      },
+      borderColor: {
+        'custom-gray': 'rgb(209 213 219)',
+      },
+    },
     screens: {
       sm: '640px',
       // => @media (min-width: 640px) { ... }
@@ -19,7 +27,9 @@ module.exports = {
       '2xl': '1200px',
       // => @media (min-width: 1536px) { ... }
     },
-    fontFamily: {},
+    fontFamily: {
+      g1: ['Belanosima'],
+    },
   },
   plugins: [require('daisyui')],
 }

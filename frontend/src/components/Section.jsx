@@ -22,7 +22,9 @@ const Section = () => {
 
   return (
     <div className='py-3 text-black mb-10'>
-      <h1 className='text-center font-semibold text-4xl'>Freshly Baked </h1>
+      <h1 className='text-center font-g1 font-semibold text-4xl'>
+        Freshly Baked{' '}
+      </h1>
       <p className='text-center py-3'>Straight to your Stomach</p>
       <div>
         <div className='flex flex-wrap justify-center'>
