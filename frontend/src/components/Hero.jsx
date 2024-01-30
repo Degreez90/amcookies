@@ -20,6 +20,9 @@ const Hero = ({
     (state) => state.auth
   )
 
+  //Problem with firstname variable when uncommented
+  // const userInitial = user.firstName[0]
+
   const { cartItems } = cart
 
   const count = cartItems
@@ -188,8 +191,8 @@ const Hero = ({
                 {user ? (
                   <div className='flex justify-center items-center space-x-3'>
                     <div className='avatar online placeholder'>
-                      <div className='bg-neutral-focus text-neutral-content rounded-full w-16'>
-                        <span className='text-xl'>U</span>
+                      <div className='bg-neutral-focus text-neutral-content rounded-full w-8'>
+                        <span className='text-xl'>{userInitial}</span>
                       </div>
                     </div>
                     <div
