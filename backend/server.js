@@ -32,10 +32,10 @@ const __dirname = path.resolve()
 
 if (process.env.NODE_ENV === 'Production') {
   // Set build folder as static
-  app.use(express.static(path.join(__dirname, '/frontend/dist')))
+  app.use('/amcookies', express.static(path.join(__dirname, '/frontend/dist')))
 
   // FIX: below code fixes app crashing on refresh in deployment
-  app.get('*', (_, res) => {
+  app.get('/mywebsite/*', (_, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
   })
 } else {
